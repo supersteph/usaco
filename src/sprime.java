@@ -40,7 +40,7 @@ public class sprime {
     public static void superpri(ArrayList<Integer> explore, int length){
         int m = length;
         while(getCount(explore.get(0))!=m){
-            for(int i = 3;i<=9;i+=2){
+            for(int i = 1;i<=9;i+=2){
                 int k = explore.get(0)*10+i;
                 if(isPri(k)){
                     explore.add(k);
