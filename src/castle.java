@@ -14,18 +14,88 @@ TASK: sprime
 
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class castle {
+    public static class module {
+        int y;
+        int x;
 
-    public static ArrayList<Integer> getRoomsizes(int[][]x){
-        ArrayList<Integer> rooms = new ArrayList<Integer>();
-        for(int i = 1; i< x.length-1;i++){
-            for (int j = 1; j<x[0].length-1;j++){
-                x
+        @Override
+        public boolean equals(Object obj) {
+            module ob = (module) obj;
+            if (ob.x == x && ob.y == y) {
+                return true;
+            }
+            return false;
+        }
+        public module(int i, int j){
+            y=i;
+            x = j;
+
+        }
+
+        @Override
+        public int hashCode() {
+            return 37 * y + x;
+        }
+    }
+    public static ArrayList<module> expand(int i, int j, HashSet<module> y, int[][] x){
+        ArrayList<module> stuff = new ArrayList<module>();
+        stuff.add(new module(i,j));
+        while(stuff.size()!=0){
+            module m = stuff.get(0);
+            if(x[m.y+1][m.x] != 1){
+                if(!y.contains(new module(m.y+2,m.x))){
+                    stuff.add(new module(m.y+2,m.x));
+                    y.add(new module(m.y+2,m.x));
+                }
+
+            }
+            if(x[m.y-1][m.x] != 1){
+                if(!y.contains(new module(m.y-2,m.x))){
+                    stuff.add(new module(m.y-2,m.x));
+                    y.add(new module(m.y-2,m.x));
+                }
+
+            }
+            if(x[m.y][m.x+1] != 1){
+                if(!y.contains(new module(m.y,m.x+2))){
+                    stuff.add(new module(m.y,m.x+2));
+                    y.add(new module(m.y,m.x+2));
+                }
+
+            }
+            if(x[m.y][m.x-1] != 1){
+                if(!y.contains(new module(m.y,m.x-2))){
+                    stuff.add(new module(m.y,m.x-2));
+                    y.add(new module(m.y,m.x-2));
+                }
+
+            }
+            stuff.remove(0);
+
+
+
+        }
+        return stuff;
+
+
+    }
+
+
+    public static ArrayList<ArrayList<module>> getRoomsizes(int[][]x) {
+        ArrayList<ArrayList<module>> rooms = new ArrayList<ArrayList<module>>();
+        HashSet<module> explored = new HashSet<module>();
+        for (int i = 1; i < x.length - 1; i += 2) {
+            for (int j = 1; j < x[0].length - 1; j++) {
+                rooms.add(expand(i,j,explored,x));
 
             }
         }
+        return rooms;
+    }
 
 
 
@@ -64,6 +134,16 @@ public class castle {
 
             }
         }
+
+        ArrayList<ArrayList<module>> roomsbefore = getRoomsizes(x);
+        out.println(roomsbefore.size());
+        int max = 0;
+        for(int i = 0; i<roomsbefore.size();i++){
+            if(roomsbefore.get(i).size()>max){
+                max = roomsbefore.get(i).size();
+            }
+        }
+        out.println(max);
 
 
     }
