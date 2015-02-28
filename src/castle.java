@@ -17,15 +17,49 @@ import java.io.*;
 import java.util.*;
 
 public class castle {
+    public static class module {
+        int y;
+        int x;
 
-    public static ArrayList<Integer> getRoomsizes(int[][]x){
+        @Override
+        public boolean equals(Object obj) {
+            module ob = (module) obj;
+            if (ob.x == x && ob.y == y) {
+                return true;
+            }
+            return false;
+        }
+        public module init(int i, int j){
+            module k = new module();
+            k.y = i;
+            k.x = j;
+            return k;
+
+        }
+
+        @Override
+        public int hashCode() {
+            return 37 * y + x;
+        }
+    }
+
+    public static HashSet<module> expand(int i, int j, HashSet<Integer> y, int[][] x){
+        HashSet<module> stuff = new HashSet<module>();
+        
+
+    }
+
+
+    public static ArrayList<Integer> getRoomsizes(int[][]x) {
         ArrayList<Integer> rooms = new ArrayList<Integer>();
-        for(int i = 1; i< x.length-1;i++){
-            for (int j = 1; j<x[0].length-1;j++){
-                x
+        for (int i = 1; i < x.length - 1; i += 2) {
+            for (int j = 1; j < x[0].length - 1; j++) {
+
 
             }
         }
+        return rooms;
+    }
 
 
 
