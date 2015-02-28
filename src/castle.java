@@ -41,6 +41,27 @@ public class castle {
             return 37 * y + x;
         }
     }
+    public static void remove(int[][]x, PrintWriter out){
+        ArrayList<module> stuff = new ArrayList<module>();
+        for(int i = 1; i<x.length-1;i++){
+            for(int j = 1; j<x[0].length;j++){
+                if(x[i][j]==1){
+                    HashSet<module> h = new HashSet<module>();
+                    ArrayList<module> l = expand(i,j,h,x);
+                    if(l.size()>stuff.size()){
+                        stuff = l;
+                    }
+
+                }
+            }
+        }
+
+        out.println(stuff.size());
+
+
+
+
+    }
     public static ArrayList<module> expand(int i, int j, HashSet<module> y, int[][] x){
         ArrayList<module> stuff = new ArrayList<module>();
         stuff.add(new module(i,j));
@@ -90,7 +111,9 @@ public class castle {
         HashSet<module> explored = new HashSet<module>();
         for (int i = 1; i < x.length - 1; i += 2) {
             for (int j = 1; j < x[0].length - 1; j++) {
-                rooms.add(expand(i,j,explored,x));
+                if(x[i][j]==0) {
+                    rooms.add(expand(i, j, explored, x));
+                }
 
             }
         }
