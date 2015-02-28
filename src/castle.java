@@ -29,11 +29,9 @@ public class castle {
             }
             return false;
         }
-        public module init(int i, int j){
-            module k = new module();
-            k.y = i;
-            k.x = j;
-            return k;
+        public module(int i, int j){
+            y=i;
+            x = j;
 
         }
 
@@ -45,6 +43,11 @@ public class castle {
 
     public static HashSet<module> expand(int i, int j, HashSet<Integer> y, int[][] x){
         HashSet<module> stuff = new HashSet<module>();
+        stuff.add(new module(i,j));
+        while(stuff.size()!=0){
+
+
+        }
         
 
     }
