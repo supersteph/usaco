@@ -54,7 +54,7 @@ public class castle {
 
                         if(i%2==0){
                             m = String.valueOf(i/2) +" " + String.valueOf(j)+ " " + "N";
-                        } 
+                        }
 
                     }
 
