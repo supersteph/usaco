@@ -43,6 +43,7 @@ public class castle {
     }
     public static void remove(int[][]x, PrintWriter out){
         ArrayList<module> stuff = new ArrayList<module>();
+        String m = "";
         for(int i = 1; i<x.length-1;i++){
             for(int j = 1; j<x[0].length;j++){
                 if(x[i][j]==1){
@@ -50,13 +51,18 @@ public class castle {
                     ArrayList<module> l = expand(i,j,h,x);
                     if(l.size()>stuff.size()){
                         stuff = l;
+
+                        if(i%2==0){
+                            m = String.valueOf(i/2) +" " + String.valueOf(j)+ " " + "N";
+                        } 
+
                     }
 
                 }
             }
         }
 
-        out.println(stuff.size());
+
 
 
 
@@ -64,12 +70,14 @@ public class castle {
     }
     public static ArrayList<module> expand(int i, int j, HashSet<module> y, int[][] x){
         ArrayList<module> stuff = new ArrayList<module>();
+        ArrayList<module> fina = new ArrayList<module>();
         stuff.add(new module(i,j));
         while(stuff.size()!=0){
             module m = stuff.get(0);
             if(x[m.y+1][m.x] != 1){
                 if(!y.contains(new module(m.y+2,m.x))){
                     stuff.add(new module(m.y+2,m.x));
+                    fina.add(new module(m.y+2,m.x));
                     y.add(new module(m.y+2,m.x));
                 }
 
@@ -78,6 +86,7 @@ public class castle {
                 if(!y.contains(new module(m.y-2,m.x))){
                     stuff.add(new module(m.y-2,m.x));
                     y.add(new module(m.y-2,m.x));
+                    fina.add(new module(m.y-2,m.x));
                 }
 
             }
@@ -85,6 +94,7 @@ public class castle {
                 if(!y.contains(new module(m.y,m.x+2))){
                     stuff.add(new module(m.y,m.x+2));
                     y.add(new module(m.y,m.x+2));
+                    fina.add(new module(m.y,m.x+2));
                 }
 
             }
@@ -92,6 +102,7 @@ public class castle {
                 if(!y.contains(new module(m.y,m.x-2))){
                     stuff.add(new module(m.y,m.x-2));
                     y.add(new module(m.y,m.x-2));
+                    fina.add(new module(m.y,m.x-2));
                 }
 
             }
@@ -100,7 +111,7 @@ public class castle {
 
 
         }
-        return stuff;
+        return fina;
 
 
     }
@@ -110,7 +121,7 @@ public class castle {
         ArrayList<ArrayList<module>> rooms = new ArrayList<ArrayList<module>>();
         HashSet<module> explored = new HashSet<module>();
         for (int i = 1; i < x.length - 1; i += 2) {
-            for (int j = 1; j < x[0].length - 1; j++) {
+            for (int j = 1; j < x[0].length - 1; j+=2) {
                 if(x[i][j]==0) {
                     rooms.add(expand(i, j, explored, x));
                 }
