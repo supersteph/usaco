@@ -66,6 +66,8 @@ public class sprime {
         for(Integer i: stuff){
             out.println(i);
         }
+
+
         out.close();
         System.exit(0);
     }
