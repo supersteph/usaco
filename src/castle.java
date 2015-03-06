@@ -49,21 +49,29 @@ public class castle {
             for(int j = 1; j<x[0].length-1;j++){
                 if(x[i][j]==1){
                     HashSet<module> h = new HashSet<module>();
-                    int[][] s = x;
-                    x[i][j] = 0;
+                    int[][] s = x.clone();
+                    s[i][j] = 0;
                     ArrayList<module> l = new ArrayList<module>();
                     if(i%2==0){
-                        l = expand(i-1,j,h,x);
+                        l = expand(i+1,j,h,s);
                     }else{
-                        l = expand(i,j-1,h,x);
+                        l = expand(i,j+1,h,s);
                     }
+                    System.out.print(l.size()+ " ");
+                    if(i%2!=0){
+                        System.out.println(String.valueOf((i/2)+1) +" " + String.valueOf(j/2)+ " " + "E");
+                    } else if(j%2!=0){
+                        System.out.println((i/2)+" " + String.valueOf((j/2)+1)+ " " + "N");
+                    }
+
+
                     if(l.size()>stuff.size()){
                         stuff = l;
 
-                        if(i%2==0){
-                            m = String.valueOf(i/2) +" " + String.valueOf(j/2)+ " " + "N";
+                        if(i%2!=0){
+                            m = String.valueOf(String.valueOf((i/2)+1) +" " + String.valueOf(j/2)+ " " + "E");
                         } else if(j%2==0){
-                            m = String.valueOf(i/2+" " + String.valueOf(j/2)+ " " + "E");
+                            m = String.valueOf((i/2)+" " + String.valueOf((j/2)+1)+ " " + "N");
                         }
 
                     }
@@ -79,9 +87,6 @@ public class castle {
         ArrayList<module> stuff = new ArrayList<module>();
         ArrayList<module> fina = new ArrayList<module>();
         stuff.add(new module(i,j));
-        if(i==0&&j==4){
-            System.out.println("very wrong");
-        }
         while(stuff.size()!=0){
             module m = stuff.get(0);
             if(x[m.y+1][m.x] != 1){
@@ -89,6 +94,7 @@ public class castle {
                     stuff.add(new module(m.y+2,m.x));
                     fina.add(new module(m.y+2,m.x));
                     y.add(new module(m.y+2,m.x));
+
                 }
 
             }
@@ -117,7 +123,6 @@ public class castle {
 
             }
             stuff.remove(0);
-
 
 
         }
@@ -189,8 +194,6 @@ public class castle {
             }
             System.out.println();
         }
-        System.out.println(x.length);
-        System.out.println(expand(7,9,new HashSet<module>(),x).size());
 
         ArrayList<ArrayList<module>> roomsbefore = getRoomsizes(x);
         out.println(roomsbefore.size());
@@ -203,6 +206,7 @@ public class castle {
         out.println(max);
 
         remove(x,out);
+
 
         out.close();
         System.exit(0);
