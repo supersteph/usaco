@@ -51,17 +51,18 @@ public class castle {
                     HashSet<module> h = new HashSet<module>();
                     int[][] s = x.clone();
                     s[i][j] = 0;
+                    System.out.println(x[i][j]);
                     ArrayList<module> l = new ArrayList<module>();
                     if(i%2==0){
                         l = expand(i+1,j,h,s);
                     }else{
                         l = expand(i,j+1,h,s);
                     }
-                    System.out.print(l.size()+ " ");
+                    //System.out.print(l.size()+ " ");
                     if(i%2!=0){
-                        System.out.println(String.valueOf((i/2)+1) +" " + String.valueOf(j/2)+ " " + "E");
+                        //System.out.println(String.valueOf((i/2)+1) +" " + String.valueOf(j/2)+ " " + "E");
                     } else if(j%2!=0){
-                        System.out.println((i/2)+" " + String.valueOf((j/2)+1)+ " " + "N");
+                        //System.out.println((i/2)+" " + String.valueOf((j/2)+1)+ " " + "N");
                     }
 
 
