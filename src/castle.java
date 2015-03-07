@@ -1,7 +1,7 @@
 /*
 ID: xiaoyun4
 LANG: JAVA
-TASK: sprime
+TASK: castle
 */
 
 /**
@@ -44,19 +44,19 @@ public class castle {
     }
     public static void remove(int[][]x, PrintWriter out){
         ArrayList<module> stuff = new ArrayList<module>();
-        String m = "";
+        StringBuffer m = new StringBuffer();
+        int[][] s = new int[x[0].length][x.length];
+        for(int k = 0; k<x[0].length;k++){
+            for(int l = 0; l<x.length;l++) {
+                s[k][l] = x[l][k];
+            }
+
+        }
         for(int i = 1; i<x[0].length-1;i++){
-            for(int j = 1; j<x.length-1;j++){
+            for(int j = x.length-2; j>0;j--){
 
                 if(x[j][i]==1){
                     HashSet<module> h = new HashSet<module>();
-                    int[][] s = new int[x[0].length][x.length];
-                    for(int k = 0; k<x[0].length;k++){
-                        for(int l = 0; l<x.length;l++) {
-                            s[k][l] = x[l][k];
-                        }
-
-                    }
                     s[i][j]= 0;
 
                     ArrayList<module> l = new ArrayList<module>();
@@ -66,35 +66,25 @@ public class castle {
                         l = expand(i,j+1,h,s);
                     }
 
-                    //System.out.print(l.size()+ " ");
-                    if(i%2!=0){
-                        //System.out.println(String.valueOf((i/2)+1) +" " + String.valueOf(j/2)+ " " + "E");
-                    } else if(j%2!=0){
-                        //System.out.println((i/2)+" " + String.valueOf((j/2)+1)+ " " + "N");
-                    }
-
 
                     if(l.size()>stuff.size()){
-                        if(i%2!=0){
-                            System.out.println(String.valueOf((j/2)+1) +" " + String.valueOf((i/2)+1)+ " " + "E");
-                            System.out.println(l.size());
-                        } else if(j%2==0){
-                            System.out.println(String.valueOf((j / 2)) + " " + String.valueOf((i / 2) + 1) + " " + "N");
-                        }
                         stuff = l;
 
-                        if(i%2!=0){
-                            m = String.valueOf(String.valueOf((j/2)+1) +" " + String.valueOf((i/2)+1)+ " " + "E");
+                        if(i%2==0){
+
+                            m = new StringBuffer(String.valueOf(String.valueOf((j/2)+1) +" " + String.valueOf((i/2))+ " " + "E"));
+
                         } else if(j%2==0){
-                            m = String.valueOf(String.valueOf((j/2))+" " + String.valueOf((i/2)+1)+ " " + "N");
+                            m = new StringBuffer(String.valueOf(String.valueOf((j/2)+1)+" " + String.valueOf((i/2)+1)+ " " + "N"));
                         }
 
                     }
+                    s[i][j]=1;
                 }
             }
         }
         out.println(stuff.size());
-        out.println(m);
+        out.println(m.toString());
 
     }
 
@@ -102,6 +92,8 @@ public class castle {
         ArrayList<module> stuff = new ArrayList<module>();
         ArrayList<module> fina = new ArrayList<module>();
         stuff.add(new module(i,j));
+        fina.add(new module(i,j));
+        y.add(new module(i,j));
         while(stuff.size()!=0){
             module m = stuff.get(0);
             if(x[m.y+1][m.x] != 1){
@@ -197,17 +189,6 @@ public class castle {
                 }
 
             }
-        }
-
-        for(int i = 0; i<x.length;i++){
-            for(int j = 0; j<x[0].length;j++){
-                if(x[i][j]==0){
-                    System.out.print(" ");
-                }else{
-                    System.out.print("#");
-                }
-            }
-            System.out.println();
         }
 
         ArrayList<ArrayList<module>> roomsbefore = getRoomsizes(x);
