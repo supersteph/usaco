@@ -27,8 +27,17 @@ public class frac1{
 
         @Override
         public boolean equals(Object obj) {
+            if(this==obj){
+                return true;
+            }
+            if(obj==null){
+                return false;
+            }
+            if(getClass()!=obj.getClass()){
+                return false;
+            }
             fraction f = (fraction) obj;
-            if((float)n/d==(float)f.n/f.d){
+            if(n*f.d==f.n*d){
                 return true;
             }
             return false;
@@ -36,7 +45,7 @@ public class frac1{
 
         @Override
         public int compareTo(fraction frac) {
-            if((float)n/d>(float)frac.n/frac.d){
+            if(n*frac.d>frac.n*d){
                 return 1;
             }
             return -1;
@@ -59,12 +68,13 @@ public class frac1{
 
         int x = Integer.parseInt(f.readLine());
         HashSet<fraction> all = new HashSet<fraction>();
-        for(int i = 0; i<=x;i++){
+        for(int i = 1; i<=x;i++){
             for(int j = 0; j<=i;j++){
                 all.add(new fraction(j,i));
             }
         }
-
+        fraction test = new fraction(0,2);
+        System.out.println(test.equals(new fraction(1,4)));
         ArrayList<fraction> stuff = new ArrayList<fraction>(all);
         Collections.sort(stuff);
         for(int i = 0; i< stuff.size();i++){
