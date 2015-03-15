@@ -17,38 +17,45 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 public class sort3 {
+    public static void print(int[]x){
+        for(int i:x){
+            System.out.print(i + " ");
+        }
+        System.out.println();
+    }
 
     public static int sort(int[] x){
         int i = 0;
         HashSet<Integer> places =  new HashSet<Integer>();
         while (places.size()!=x.length-1){
-            int max = 0;
+            int maxid = 0;
             for(int j = 0;j<x.length;j++){
-                if(x[j]>x[max]){
-                    if(!places.contains(max)){
-                        max = x[j];
-                        break;
+                if(x[j]>x[maxid]){
+                    if(!places.contains(maxid)) {
+                        maxid = j;
+                        System.out.println(maxid+" " +places.toString());
 
-                    }else{
-                        continue;
                     }
+
                 }
             }
-            int min = max;
-            for(int j = max+1; j<x.length;j++){
+            int min = maxid;
+            for(int j = maxid+1; j<x.length;j++){
                 if(x[min]>x[j]){
                     min = j;
                 }
             }
-            //System.out.println(max+ " "+min);
-            if(min!=max){
-                int lb = x[max];
-                x[max]=x[min];
+            //System.out.println(places);
+            if(min!=maxid){
+                print(x);
+                int lb = x[maxid];
+                x[maxid]=x[min];
                 x[min] = lb;
                 i++;
+                print(x);
 
             } else {
-                places.add(max);
+                places.add(maxid);
             }
         }
         System.out.println("i is " + i);
