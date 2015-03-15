@@ -20,24 +20,36 @@ public class sort3 {
 
     public static int sort(int[] x){
         int i = 0;
-        int index = 0;
-        while (index!=x.length-1){
-            int min = x[index];
-            int k = index;
-            for(int j = index+1; j<x.length;j++){
-                if(min>x[j]){
-                    k = j;
-                    min = x[j];
+        HashSet<Integer> places =  new HashSet<Integer>();
+        while (places.size()!=x.length-1){
+            int max = 0;
+            for(int j = 0;j<x.length;j++){
+                if(x[j]>x[max]){
+                    if(!places.contains(max)){
+                        max = x[j];
+                        break;
+
+                    }else{
+                        continue;
+                    }
                 }
             }
-            if(min!=x[index]){
-                int lb = x[index];
-                x[index]=x[k];
-                x[k] = lb;
+            int min = max;
+            for(int j = max+1; j<x.length;j++){
+                if(x[min]>x[j]){
+                    min = j;
+                }
+            }
+            //System.out.println(max+ " "+min);
+            if(min!=max){
+                int lb = x[max];
+                x[max]=x[min];
+                x[min] = lb;
                 i++;
 
+            } else {
+                places.add(max);
             }
-            index++;
         }
         System.out.println("i is " + i);
 
