@@ -39,7 +39,7 @@ public class castle {
 
         @Override
         public int hashCode() {
-            return 37 * y + x;
+            return 37 * y/ x;
         }
     }
     public static void remove(int[][]x, PrintWriter out){

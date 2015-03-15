@@ -53,11 +53,25 @@ public class frac1{
 
         @Override
         public int hashCode() {
-            return 37 * n + d;
+            int gcd = GCD(n,d,1);
+            return  n/d;
         }
         public String getFrac(){
             return n+"/"+d;
         }
+    }
+    public static int GCD(int i, int j, int curr){
+        if(i==0){
+            return 1;
+        }
+
+        for(int m = 2; m<=i;m++){
+            if(i%m==0&&j%m==0){
+                curr = GCD(i/m,j/m,curr*m);
+            }
+        }
+        return curr;
+
     }
     public static void main(String[] args) throws IOException {
 
@@ -80,6 +94,7 @@ public class frac1{
         for(int i = 0; i< stuff.size();i++){
             out.println(stuff.get(i).getFrac());
         }
+        System.out.println(GCD(3,6,1));
 
         out.close();
         System.exit(0);
