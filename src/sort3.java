@@ -45,7 +45,7 @@ public class sort3 {
                     min = j;
                 }
             }
-            //System.out.println(places);
+            System.out.println(min + " " + maxid);
             if(min!=maxid){
                 print(x);
                 int lb = x[maxid];
