@@ -18,47 +18,103 @@ import java.util.*;
 
 public class sort3 {
     public static void print(int[]x){
-        for(int i:x){
-            System.out.print(i + " ");
+        for(int j:x){
+            System.out.print(j+ " ");
         }
         System.out.println();
     }
+    public static int[] getBorders(int[] x){
+        int[] count = new int[4];
+        for(int y:x){
+            count[y]+=1;
+        }
+        count[2]+=count[1];
+        count[3]+=count[2];
+        return count;
+    }
+    public static boolean shouldswitch(int i, int j, int[] x) {
+        int[] all = getBorders(x);
+        if (x[i] == domainof(all,j) && x[j]== domainof(all,i)){
+            return true;
+        }
+        return false;
+
+
+    }
+    public static int domainof(int[] borders, int x){
+
+        for(int i = 0; i<3;i++){
+            if(borders[i]<=x && borders[i+1]>x){
+                return i+1;
+
+            }
+        }
+        return 0;
+
+    }
+
 
     public static int sort(int[] x){
         int i = 0;
         HashSet<Integer> places =  new HashSet<Integer>();
+        boolean shs = false;
         while (places.size()!=x.length-1){
+            for(int m = 0; m<x.length-1;m++){
+                for(int n = 0; n<x.length-1;n++){
+                    if(shouldswitch(m,n,x)){
+                        shs = true;
+                        int lb = x[m];
+                        x[m]=x[n];
+                        x[n] = lb;
+                        i++;
+                        //shs = false;
+                    }
+
+                }
+            }
+            if(shs){
+                print(x);
+
+                shs = false;
+                continue;
+
+            }
+
             int maxid = 0;
             for(int j = 0;j<x.length;j++){
                 if(x[j]>x[maxid]){
-                    if(!places.contains(maxid)) {
+                    if(!places.contains(j)) {
+                        //System.out.println("yo");
                         maxid = j;
-                        System.out.println(maxid+" " +places.toString());
 
                     }
 
                 }
             }
             int min = maxid;
-            for(int j = maxid+1; j<x.length;j++){
+            for(int j = x.length-1; j>maxid;j--){
                 if(x[min]>x[j]){
+                    min = j;
+                } else if(shouldswitch(maxid,j,x)){
                     min = j;
                 }
             }
-            System.out.println(min + " " + maxid);
-            if(min!=maxid){
+            //if(shouldswitch(,x))
+            if(x[min]==1&&x[maxid]==1){
+                break;
+            }
+            if(min!=maxid&&x[min]!=x[maxid]){
                 print(x);
+
                 int lb = x[maxid];
                 x[maxid]=x[min];
                 x[min] = lb;
                 i++;
-                print(x);
 
             } else {
                 places.add(maxid);
             }
         }
-        System.out.println("i is " + i);
 
         return i;
     }
