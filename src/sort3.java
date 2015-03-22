@@ -57,27 +57,25 @@ public class sort3 {
     public static int sort(int[] x){
         int i = 0;
         HashSet<Integer> places =  new HashSet<Integer>();
-        boolean shs = false;
+        //boolean shs = false;
+        int index =0;
         while (places.size()!=x.length-1){
+            outerloop:
             for(int m = 0; m<x.length-1;m++){
                 for(int n = 0; n<x.length-1;n++){
-                    if(shouldswitch(m,n,x)){
-                        shs = true;
+                    if(shouldswitch(m,n,x)&&x[m]!=x[n]){
+                        //shs = true;
                         int lb = x[m];
                         x[m]=x[n];
                         x[n] = lb;
+                        places.add(m);
                         i++;
+
+                        break outerloop;
                         //shs = false;
                     }
 
                 }
-            }
-            if(shs){
-                print(x);
-
-                shs = false;
-                continue;
-
             }
 
             int maxid = 0;
@@ -104,7 +102,6 @@ public class sort3 {
                 break;
             }
             if(min!=maxid&&x[min]!=x[maxid]){
-                print(x);
 
                 int lb = x[maxid];
                 x[maxid]=x[min];
