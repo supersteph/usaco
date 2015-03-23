@@ -41,6 +41,30 @@ public class sort3 {
 
 
     }
+    public static void switchthree(int a,int b, int c, int[]x,int[] borders){
+        int a1 = x[a];
+        int b1 = x[b];
+        int c1 = x[c];
+        x[a] = 0;
+        x[b] = 0;
+        x[c] = 0;
+        for(int i = borders[a1-1]; i<borders[a1];i++){
+            if(x[i]==0){
+                x[i] = a1;
+            }
+        }
+        for(int i = borders[b1-1]; i<borders[b1];i++){
+            if(x[i]==0){
+                x[i] = b1;
+            }
+        }
+        for(int i = borders[c1-1]; i<borders[c1];i++){
+            if(x[i]==0){
+                x[i] = c1;
+            }
+        }
+
+    }
     public static int domainof(int[] borders, int x){
 
         for(int i = 0; i<3;i++){
@@ -57,60 +81,58 @@ public class sort3 {
     public static int sort(int[] x){
         int i = 0;
         HashSet<Integer> places =  new HashSet<Integer>();
+
+        int[] borders = getBorders(x);
         //boolean shs = false;
         int index =0;
-        while (places.size()!=x.length-1){
-            outerloop:
-            for(int m = 0; m<x.length-1;m++){
-                for(int n = 0; n<x.length-1;n++){
-                    if(shouldswitch(m,n,x)&&x[m]!=x[n]){
-                        //shs = true;
-                        int lb = x[m];
-                        x[m]=x[n];
-                        x[n] = lb;
-                        places.add(m);
-                        i++;
+        outerloop:
+        while (index!=x.length){
+            if(domainof(borders,index)==x[index]){
+                index++;
+                continue;
+            }
+            for(int index2 = index; index2<x.length;index2++) {
 
-                        break outerloop;
-                        //shs = false;
+
+                if (shouldswitch(index, index2, x) && x[index] != x[index2]) {
+                    //shs = true;
+                    int lb = x[index];
+                    x[index] = x[index2];
+                    x[index2] = lb;
+                    places.add(index);
+                    places.add(index2);
+                    i++;
+                    continue outerloop;
+
+                    //shs = false;
+                }
+            }
+
+
+            for(int index2 = x.length-1;index2>index;index2--){
+                if(x[index2]==domainof(borders,index2)||x[index2]==x[index]){
+                    continue;
+                }
+                for(int index3 = index; index3<x.length;index3++){
+                    if(x[index2]==x[index3]||x[index]==x[index3]||x[index3]==domainof(borders,index3)){
+                        if(x[index]==domainof(borders,index3)){
+                            switchthree(index,index2,index3,x,borders);
+                            i+=2;
+                            continue outerloop;
+
+
+                        }
+
                     }
 
                 }
-            }
 
-            int maxid = 0;
-            for(int j = 0;j<x.length;j++){
-                if(x[j]>x[maxid]){
-                    if(!places.contains(j)) {
-                        //System.out.println("yo");
-                        maxid = j;
-
-                    }
-
-                }
             }
-            int min = maxid;
-            for(int j = x.length-1; j>maxid;j--){
-                if(x[min]>x[j]){
-                    min = j;
-                } else if(shouldswitch(maxid,j,x)){
-                    min = j;
-                }
-            }
-            //if(shouldswitch(,x))
-            if(x[min]==1&&x[maxid]==1){
-                break;
-            }
-            if(min!=maxid&&x[min]!=x[maxid]){
+            index++;
 
-                int lb = x[maxid];
-                x[maxid]=x[min];
-                x[min] = lb;
-                i++;
 
-            } else {
-                places.add(maxid);
-            }
+
+
         }
 
         return i;
