@@ -17,6 +17,42 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 public class sort3 {
+
+    static class Ary {
+        public int[] payloads;
+        public int[] counts;
+
+        public Ary(int[] p) {
+            payloads = p;
+            counts = getBorders(p);
+            //print(counts);
+        }
+
+        public int GetIndexOfExpectedValueFromDomain(int domain, int value) {
+            for (int idx = counts[domain-1]; idx < counts[domain]; ++idx) {
+                if (payloads[idx] == value) return idx;
+            }
+            return -1;
+        }
+
+        public int GetIndexOfMisfitFromDomain(int domain) {
+            for (int idx = counts[domain-1]; idx < counts[domain]; ++idx) {
+                if (payloads[idx] != domain) return idx;
+            }
+            return -1;
+        }
+
+        public int domainForIndex(int idx){
+            for(int i = 0; i<3;i++){
+                if(counts[i] <= idx && counts[i+1] > idx){
+                    return i+1;
+                }
+            }
+            return -1;
+        }
+    }
+
+
     public static void print(int[]x){
         for(int j:x){
             System.out.print(j+ " ");
@@ -32,110 +68,41 @@ public class sort3 {
         count[3]+=count[2];
         return count;
     }
-    public static boolean shouldswitch(int i, int j, int[] x) {
-        int[] all = getBorders(x);
-        if (x[i] == domainof(all,j) && x[j]== domainof(all,i)){
-            return true;
-        }
-        return false;
 
-
-    }
-    public static void switchthree(int a,int b, int c, int[]x,int[] borders){
-        int a1 = x[a];
-        int b1 = x[b];
-        int c1 = x[c];
-        x[a] = 0;
-        x[b] = 0;
-        x[c] = 0;
-        for(int i = borders[a1-1]; i<borders[a1];i++){
-            if(x[i]==0){
-                x[i] = a1;
-            }
-        }
-        for(int i = borders[b1-1]; i<borders[b1];i++){
-            if(x[i]==0){
-                x[i] = b1;
-            }
-        }
-        for(int i = borders[c1-1]; i<borders[c1];i++){
-            if(x[i]==0){
-                x[i] = c1;
-            }
-        }
-
-    }
-    public static int domainof(int[] borders, int x){
-
-        for(int i = 0; i<3;i++){
-            if(borders[i]<=x && borders[i+1]>x){
-                return i+1;
-
-            }
-        }
-        return 0;
-
-    }
 
 
     public static int sort(int[] x){
-        int i = 0;
-        HashSet<Integer> places =  new HashSet<Integer>();
+        int sum  = 0;
+        Ary ary = new Ary(x);
 
         int[] borders = getBorders(x);
-        //boolean shs = false;
-        int index =0;
-        outerloop:
-        while (index!=x.length){
-            if(domainof(borders,index)==x[index]){
-                index++;
+        for (int cur = 0; cur !=x.length; ++cur){
+            //print(ary.payloads);
+            if(ary.domainForIndex(cur) == ary.payloads[cur]) {
                 continue;
             }
-            for(int index2 = index; index2<x.length;index2++) {
 
-
-                if (shouldswitch(index, index2, x) && x[index] != x[index2]) {
-                    //shs = true;
-                    int lb = x[index];
-                    x[index] = x[index2];
-                    x[index2] = lb;
-                    places.add(index);
-                    places.add(index2);
-                    i++;
-                    continue outerloop;
-
-                    //shs = false;
-                }
+            // now we have a misfit.
+            // first test whether there is direct swap.
+            int idx = ary.GetIndexOfExpectedValueFromDomain(ary.payloads[cur], ary.domainForIndex(cur));
+            if (idx > 0) {
+                int tmp = ary.payloads[cur];
+                ary.payloads[cur] = ary.payloads[idx];
+                ary.payloads[idx] = tmp;
+                sum += 1;
+            } else {
+                int msftidx = ary.GetIndexOfMisfitFromDomain(ary.payloads[cur]);
+                int idx2 = ary.GetIndexOfExpectedValueFromDomain(ary.payloads[msftidx], ary.domainForIndex(cur));
+                int tmp = ary.payloads[idx2];
+                ary.payloads[idx2] = ary.payloads[msftidx];
+                ary.payloads[msftidx] = ary.payloads[cur];
+                ary.payloads[cur] = tmp;
+                sum += 2;
             }
-
-
-            for(int index2 = x.length-1;index2>index;index2--){
-                if(x[index2]==domainof(borders,index2)||x[index2]==x[index]){
-                    continue;
-                }
-                for(int index3 = index; index3<x.length;index3++){
-                    if(x[index2]==x[index3]||x[index]==x[index3]||x[index3]==domainof(borders,index3)){
-                        if(x[index]==domainof(borders,index3)){
-                            switchthree(index,index2,index3,x,borders);
-                            i+=2;
-                            continue outerloop;
-
-
-                        }
-
-                    }
-
-                }
-
-            }
-            index++;
-
-
-
 
         }
 
-        return i;
+        return sum;
     }
 
     public static void main(String[] args) throws IOException {
@@ -152,6 +119,11 @@ public class sort3 {
             m[i] = Integer.parseInt(f.readLine());
 
         }
+
+        Ary ary = new Ary(m);
+        //System.out.println(ary.domainForIndex(0));
+        //System.out.println(ary.domainForIndex(1));
+        //System.out.println(ary.domainForIndex(2));
 
         int l = sort(m);
         out.println(l);
