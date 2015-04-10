@@ -15,6 +15,30 @@ public class subset {
     public static int count = 0;
     public static int max = 0;
 
+    public static class path{
+        int[] x;
+        boolean shouldadd;
+
+        public path(int[]stuff){
+            x = stuff;
+            shouldadd = false;
+        }
+
+        public void addtox(){
+            int sum = 0;
+            for(int i = 0; i<x.length;i++){
+                if(x[i]>max){
+                    sum-=x[i];
+
+                }
+            }
+        }
+
+
+
+
+    }
+
     public static ArrayList<int[]> x = new ArrayList<int[]>();
     public static boolean isequal(int[] first, int[] second) {
         int firstsum = 0;
@@ -53,21 +77,41 @@ public class subset {
 
     }
 
-    public static void getIt(int index, int diff, int sum, boolean tracked){
-        if(index==max/2+1){
-            int k = contains(index,diff);
-            if(k!=-1){
-                x.get(k)[3] ++;
+    public static void add(ArrayList<Integer> m, boolean l){
+        int sum = 0;
+        int k;
+        for(int i:m){
+
+            if(i> 0){
+                sum -= i/max;
+                k=i/max;
+            } else{
+                sum+= i;
+                k = i;
+            }
+            //int[] a= new intp][];
+            if(l) {
+                int[] a = {sum, k, 1, 1};
+                x.add(a);
             }
             else{
-                //System.out.println("yo");
-                tracked = true;
-                int[] placeholder = {diff,sum,0,1};
-                x.add(placeholder);
+                int[] a = {sum,k,-1,1};
+                x.add(a);
 
             }
 
+
         }
+    }
+
+    public static void getIt(int index, int diff, int sum, boolean tracked, ArrayList<Integer>m){
+        for(int[] k: x){
+            if(k[0]==diff&&k[1]==index){
+                k[3]++;
+
+            }
+        }
+
         if(tracked&&Math.abs(diff) == max&&index == max){
             x.get(x.size()-1)[2]++;
             return;
@@ -83,9 +127,13 @@ public class subset {
         if(Math.abs(diff)>Math.abs(sum)){
             return;
         }
+        ArrayList<Integer> other = m;
+        ArrayList<Integer> thing = m;
+        other.add(index);
+        thing.add(-index);
 
-        getIt(index+1,diff+index, sum-index, tracked);
-        getIt(index+1,diff-index, sum - index,tracked);
+        getIt(index + 1, diff + index, sum - index, tracked, other);
+        getIt(index+1,diff-index, sum - index,tracked,thing);
 
 
 
@@ -110,7 +158,7 @@ public class subset {
 
         }
 
-        getIt(2,1,sum-1, false);
+        getIt(2,1,sum-1, false, new ArrayList<Integer>());
 
         //out.println(count);
         int tot = 0;
