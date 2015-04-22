@@ -12,76 +12,7 @@ TASK: lamps
 public class lamps {
 
 
-    public static int toint(int[] bin){
-        int sum = 0;
-        for(int i = 0; i<bin.length;i++){
-            sum+=bin[i]*Math.pow(2,bin.length-1-i);
 
-        }
-        return sum;
-    }
-    public static int[] toAry(int in,int n){
-        int[] ret = new int[n];
-        for(int i = 0; i<n;i++){
-            if(in-Math.pow(2,n-i-1)>0){
-                ret[i]=1;
-            } else{
-                ret[i]=0;
-            }
-        }
-        return ret;
-    }
-
-    public static void quicksort(int start, int end, ArrayList<confg> stuff){
-        for(int i = 0; i < stuff.size();i++){
-            print(stuff.get(i).it);
-        }
-        if(start==end){
-            return;
-        }
-        int pivot = start;
-        int origend = end;
-
-        while(start!=end){
-            //System.out.println(start+" "+end);
-            System.out.println("yo");
-            if(compare(stuff.get(start),stuff.get(pivot),false)){
-                start++;
-                continue;
-            } else if(compare(stuff.get(pivot), stuff.get(end),true)){
-                end--;
-                continue;
-
-            }
-            confg i = stuff.get(start);
-            stuff.set(start,stuff.get(end));
-            stuff.set(start,i);
-        }
-        confg i = stuff.get(start);
-        stuff.set(start,stuff.get(pivot));
-        stuff.set(pivot,i);
-        quicksort(pivot,start,stuff);
-        quicksort(start+1,origend,stuff);
-
-
-
-    }
-    public static boolean compare(confg first, confg second, boolean equals){
-
-        for (int i = 0; i < first.it.length; i++) {
-            if (second.it[i] > first.it[i]) {
-                return false;
-            }else if(second.it[i]<first.it[i]){
-                return true;
-            }
-        }
-
-        if(equals){
-            return true;
-        }else {
-            return false;
-        }
-    }
     public static class confg implements Comparable{
         int[] it;
         int count;
@@ -264,27 +195,39 @@ public class lamps {
 
         getit(stuff,start, count, new HashSet<confg>());
         //quicksort(0,stuff.size()-1,stuff);
-        Collections.sort(stuff);    
 
-        int cont = 0;
+
+        //int cont = 0;
         outerloop:
         for(int i = 0; i<stuff.size();i++){
             int[] kk = stuff.get(i).it;
             for(int j = 0; j<on.size();j++){
                 if(kk[on.get(j)-1]!=1){
+                    stuff.remove(i);
                     continue outerloop;
                 }
             }
             for(int j = 0; j<off.size();j++){
+                print(kk);
+                System.out.println(off.get(j)-1);
                 if(kk[off.get(j)-1]!=0){
+                    System.out.println("removed");
+
+                    stuff.remove(i);
                     continue outerloop;
                 }
             }
 
-            print(kk,out);
-            cont++;
+
         }
-        if(cont==0){
+
+
+
+        Collections.sort(stuff);
+        for(int i = 0; i< stuff.size();i++){
+            print(stuff.get(i).it,out);
+        }
+        if(stuff.size()==0){
             out.println("IMPOSSIBLE");
 
         }
