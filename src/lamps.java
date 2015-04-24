@@ -63,6 +63,16 @@ public class lamps {
             return 0;
 
         }
+
+        @Override
+        public String toString() {
+            StringBuffer lel = new StringBuffer();
+            for(int i = 0; i<it.length;i++){
+                lel.append(it[i]);
+
+            }
+            return lel.toString();
+        }
     }
 
     public static void getit(ArrayList<confg> stuff, confg it, int max, HashSet<confg> been){
@@ -195,25 +205,29 @@ public class lamps {
 
         getit(stuff,start, count, new HashSet<confg>());
         //quicksort(0,stuff.size()-1,stuff);
+        //System.out.println(stuff);
 
 
         //int cont = 0;
+        //System.out.println(stuff.size());
         outerloop:
         for(int i = 0; i<stuff.size();i++){
+            //System.out.println(stuff+ " " + i);
             int[] kk = stuff.get(i).it;
             for(int j = 0; j<on.size();j++){
                 if(kk[on.get(j)-1]!=1){
                     stuff.remove(i);
+                    i--;
                     continue outerloop;
                 }
             }
             for(int j = 0; j<off.size();j++){
-                print(kk);
-                System.out.println(off.get(j)-1);
+                //print(kk);
                 if(kk[off.get(j)-1]!=0){
-                    System.out.println("removed");
+                    //System.out.println("removed " +(off.get(j)-1));
 
                     stuff.remove(i);
+                    i--;
                     continue outerloop;
                 }
             }
