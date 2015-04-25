@@ -14,9 +14,9 @@ public class lamps {
 
 
     public static class confg implements Comparable{
-        int[] it;
+        boolean[] it;
         int count;
-        public confg(int[] x, int m){
+        public confg(boolean[] x, int m){
             //works = k;
             it = x;
             count = m;
@@ -43,9 +43,14 @@ public class lamps {
         public int hashCode() {
             int sum = 0;
             for(int i = 0; i<it.length;i++){
-                sum+=i*Math.pow(10.0,i);
+                if(it[i]==true){
+                    sum= sum*2 +1;
+                } else{
+                    sum= sum*2;
+                }
+
             }
-            sum*= count;
+            sum+= count;
             return sum;
 
         }
@@ -54,9 +59,9 @@ public class lamps {
         public int compareTo(Object o) {
             confg second = (confg) o;
             for (int i = 0; i < it.length; i++) {
-                if (second.it[i] > it[i]) {
+                if (second.it[i] == true&& it[i]==false) {
                     return -1;
-                }else if(second.it[i]<it[i]){
+                }else if(second.it[i] == false && it[i]==true){
                     return 1;
                 }
             }
@@ -89,7 +94,7 @@ public class lamps {
             stuff.add(it);
             return;
         }
-        int[] l = it.it;
+        boolean[] l = it.it;
         getit(stuff, new confg(button1(l),it.count+1),max,been);
         getit(stuff, new confg(button2(l),it.count+1),max,been);
         getit(stuff, new confg(button3(l),it.count+1),max,been);
@@ -97,10 +102,10 @@ public class lamps {
 
     }
 
-    public static int[] button1(int[] stuff){
-        int[] otherstuff = stuff.clone();
+    public static boolean[] button1(boolean[] stuff){
+        boolean[] otherstuff = stuff.clone();
         for(int i = 0; i<stuff.length;i++){
-            otherstuff[i]=(stuff[i]+1)%2;
+            otherstuff[i]=!(stuff[i]);
 
         }
 
@@ -110,12 +115,12 @@ public class lamps {
         return otherstuff;
     }
 
-    public static int[] button2(int[] stuff){
-        int[] otherstuff = stuff.clone();
+    public static boolean[] button2(boolean[] stuff){
+        boolean[] otherstuff = stuff.clone();
         for(int i = 0; i<stuff.length;i+=2){
             if(i%2==0){
                 //means that it is odd
-                otherstuff[i]=(stuff[i]+1)%2;
+                otherstuff[i]=!(stuff[i]);
 
             }
         }
@@ -132,12 +137,12 @@ public class lamps {
         System.out.println();
 
     }
-    public static int[] button3(int[] stuff){
-        int[] otherstuff = stuff.clone();
+    public static boolean[] button3(boolean[] stuff){
+        boolean[] otherstuff = stuff.clone();
         for(int i = 1; i<stuff.length;i+=2){
             if((i+1)%2==0){
                 //means that it is odd
-                otherstuff[i]=(stuff[i]+1)%2;
+                otherstuff[i]=!(stuff[i]);
 
             }
         }
@@ -145,23 +150,31 @@ public class lamps {
         return otherstuff;
     }
 
-    public static int[] button4(int[] stuff){
-        int[] otherstuff = stuff.clone();
+    public static boolean[] button4(boolean[] stuff){
+        boolean[] otherstuff = stuff.clone();
         for(int i = 0; i<stuff.length;i+=3){
             if(i%3==0){
                 //means that it is odd
-                otherstuff[i]=(stuff[i]+1)%2;
+                otherstuff[i]=!(stuff[i]);
 
             }
         }
         //otherstuff[otherstuff.length-1] ++;
         return otherstuff;
     }
-    public static void print(int[] toprint, PrintWriter out){
+    public static void print(boolean[] toprint, PrintWriter out){
         for(int i = 0; i<toprint.length-1;i++){
-            out.print(toprint[i]);
+            if(toprint[i]==true) {
+                out.print(1);
+            }else{
+                out.print(0);
+            }
         }
-        out.println(toprint[toprint.length-1    ]);
+        if(toprint[toprint.length-1]==true) {
+            out.println(1);
+        }else{
+            out.println(0);
+        }
     }
 
     public static void main(String[] args) throws IOException {
@@ -189,9 +202,9 @@ public class lamps {
             shouldbeoff = Integer.parseInt(stoff.nextToken());
         }
 
-        int[] it = new int[n];
+        boolean[] it = new boolean[n];
         for(int i = 0; i <it.length;i++){
-            it[i] = 1;
+            it[i] = true;
         }
 
         confg start=  new confg(it,0);
@@ -213,9 +226,9 @@ public class lamps {
         outerloop:
         for(int i = 0; i<stuff.size();i++){
             //System.out.println(stuff+ " " + i);
-            int[] kk = stuff.get(i).it;
+            boolean[] kk = stuff.get(i).it;
             for(int j = 0; j<on.size();j++){
-                if(kk[on.get(j)-1]!=1){
+                if(kk[on.get(j)-1]!=true){
                     stuff.remove(i);
                     i--;
                     continue outerloop;
@@ -223,7 +236,7 @@ public class lamps {
             }
             for(int j = 0; j<off.size();j++){
                 //print(kk);
-                if(kk[off.get(j)-1]!=0){
+                if(kk[off.get(j)-1]!=false){
                     //System.out.println("removed " +(off.get(j)-1));
 
                     stuff.remove(i);
