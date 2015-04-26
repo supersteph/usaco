@@ -91,7 +91,7 @@ public class lamps {
             return;
         }
 
-        been.add(it);
+        been.add(new confg(it.it,it.count));
         if(it.count==max){
             stuff.add(it);
             return;
@@ -108,12 +108,13 @@ public class lamps {
         button3(l);
         button4(l);
         getit(stuff, new confg(l,it.count+1),max,been);
+        button4(l);
 
     }
 
     public static void button1(boolean[] stuff){
 
-        boolean[] otherstuff = stuff.clone();
+        //boolean[] otherstuff = stuff.clone();
         for(int i = 0; i<stuff.length;i++){
             stuff[i]=!(stuff[i]);
 
