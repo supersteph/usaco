@@ -10,16 +10,27 @@ TASK: lamps
 */
 
 public class lamps {
-
+    public static int  lel = 0;
 
 
     public static class confg implements Comparable{
         boolean[] it;
         int count;
+        int sum;
         public confg(boolean[] x, int m){
             //works = k;
             it = x;
             count = m;
+            sum = 0;
+            for(int i = 0; i<it.length;i++){
+                if(it[i]==true){
+                    sum= sum*2 +1;
+                } else{
+                    sum= sum*2;
+                }
+
+            }
+            sum+= count;
 
         }
 
@@ -41,16 +52,7 @@ public class lamps {
 
         @Override
         public int hashCode() {
-            int sum = 0;
-            for(int i = 0; i<it.length;i++){
-                if(it[i]==true){
-                    sum= sum*2 +1;
-                } else{
-                    sum= sum*2;
-                }
 
-            }
-            sum+= count;
             return sum;
 
         }
@@ -98,11 +100,12 @@ public class lamps {
         getit(stuff, new confg(button1(l),it.count+1),max,been);
         getit(stuff, new confg(button2(l),it.count+1),max,been);
         getit(stuff, new confg(button3(l),it.count+1),max,been);
-        getit(stuff,new confg(button4(l),it.count+1),max,been);
+        getit(stuff, new confg(button4(l),it.count+1),max,been);
 
     }
 
     public static boolean[] button1(boolean[] stuff){
+        lel+=1;
         boolean[] otherstuff = stuff.clone();
         for(int i = 0; i<stuff.length;i++){
             otherstuff[i]=!(stuff[i]);
@@ -116,6 +119,7 @@ public class lamps {
     }
 
     public static boolean[] button2(boolean[] stuff){
+        lel+=1;
         boolean[] otherstuff = stuff.clone();
         for(int i = 0; i<stuff.length;i+=2){
             if(i%2==0){
@@ -130,14 +134,8 @@ public class lamps {
         //System.out.println(stuff[stuff.length-1]+ " " +otherstuff[stuff.length-1]);
         return otherstuff;
     }
-    public static void print(int[]x){
-        for(int k:x){
-            System.out.print(k + " ");
-        }
-        System.out.println();
-
-    }
     public static boolean[] button3(boolean[] stuff){
+        lel++;
         boolean[] otherstuff = stuff.clone();
         for(int i = 1; i<stuff.length;i+=2){
             if((i+1)%2==0){
@@ -151,6 +149,7 @@ public class lamps {
     }
 
     public static boolean[] button4(boolean[] stuff){
+        lel++;
         boolean[] otherstuff = stuff.clone();
         for(int i = 0; i<stuff.length;i+=3){
             if(i%3==0){
@@ -223,6 +222,7 @@ public class lamps {
 
         //int cont = 0;
         //System.out.println(stuff.size());
+        System.out.println(stuff.size());
         outerloop:
         for(int i = 0; i<stuff.size();i++){
             //System.out.println(stuff+ " " + i);
@@ -251,6 +251,7 @@ public class lamps {
 
 
         Collections.sort(stuff);
+
         for(int i = 0; i< stuff.size();i++){
             print(stuff.get(i).it,out);
         }
@@ -258,6 +259,8 @@ public class lamps {
             out.println("IMPOSSIBLE");
 
         }
+
+        System.out.println(lel);
 
         //int[] l = {0,1,0};
         //int[] k = {1,0,1};
