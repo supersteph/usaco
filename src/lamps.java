@@ -97,34 +97,35 @@ public class lamps {
             return;
         }
         boolean[] l = it.it;
-        getit(stuff, new confg(button1(l),it.count+1),max,been);
-        getit(stuff, new confg(button2(l),it.count+1),max,been);
-        getit(stuff, new confg(button3(l),it.count+1),max,been);
-        getit(stuff, new confg(button4(l),it.count+1),max,been);
+        button1(l);
+        getit(stuff, new confg(l,it.count+1),max,been);
+        button1(l);
+        button2(l);
+        getit(stuff, new confg(l,it.count+1),max,been);
+        button2(l);
+        button3(l);
+        getit(stuff, new confg(l,it.count+1),max,been);
+        button3(l);
+        button4(l);
+        getit(stuff, new confg(l,it.count+1),max,been);
 
     }
 
-    public static boolean[] button1(boolean[] stuff){
-        lel+=1;
+    public static void button1(boolean[] stuff){
+
         boolean[] otherstuff = stuff.clone();
         for(int i = 0; i<stuff.length;i++){
-            otherstuff[i]=!(stuff[i]);
+            stuff[i]=!(stuff[i]);
 
         }
 
-        //otherstuff[otherstuff.length-1] ++;
-
-        //System.out.println(stuff[stuff.length-1]+ " " +otherstuff[stuff.length-1]);
-        return otherstuff;
     }
 
-    public static boolean[] button2(boolean[] stuff){
-        lel+=1;
-        boolean[] otherstuff = stuff.clone();
+    public static void button2(boolean[] stuff){
         for(int i = 0; i<stuff.length;i+=2){
             if(i%2==0){
                 //means that it is odd
-                otherstuff[i]=!(stuff[i]);
+                stuff[i]=!(stuff[i]);
 
             }
         }
@@ -132,34 +133,32 @@ public class lamps {
 
         //otherstuff[otherstuff.length-1] ++;
         //System.out.println(stuff[stuff.length-1]+ " " +otherstuff[stuff.length-1]);
-        return otherstuff;
+        //return otherstuff;
     }
-    public static boolean[] button3(boolean[] stuff){
-        lel++;
-        boolean[] otherstuff = stuff.clone();
+    public static void button3(boolean[] stuff){
+
         for(int i = 1; i<stuff.length;i+=2){
             if((i+1)%2==0){
                 //means that it is odd
-                otherstuff[i]=!(stuff[i]);
+                stuff[i]=!(stuff[i]);
 
             }
         }
         //otherstuff[otherstuff.length-1] ++;
-        return otherstuff;
+        //return otherstuff;
     }
 
-    public static boolean[] button4(boolean[] stuff){
-        lel++;
-        boolean[] otherstuff = stuff.clone();
+    public static void button4(boolean[] stuff){
+
         for(int i = 0; i<stuff.length;i+=3){
             if(i%3==0){
                 //means that it is odd
-                otherstuff[i]=!(stuff[i]);
+                stuff[i]=!(stuff[i]);
 
             }
         }
         //otherstuff[otherstuff.length-1] ++;
-        return otherstuff;
+        //return otherstuff;
     }
     public static void print(boolean[] toprint, PrintWriter out){
         for(int i = 0; i<toprint.length-1;i++){
@@ -210,14 +209,15 @@ public class lamps {
 
 
         ArrayList<confg> stuff = new ArrayList<confg>();
-        //HashSet<confg> contain = new HashSet<confg>();
+        HashSet<confg> contain = new HashSet<confg>();
 
 
 
 
-        getit(stuff,start, count, new HashSet<confg>());
+        getit(stuff,start, count, contain);
         //quicksort(0,stuff.size()-1,stuff);
         //System.out.println(stuff);
+        System.out.println(contain.size());
 
 
         //int cont = 0;
