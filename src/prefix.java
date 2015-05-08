@@ -50,21 +50,27 @@ public class prefix {
 
         boolean[] everything = new boolean[compare.length()];
         for(int i = 0; i<prim.size();i++){
+            //goes through all the primitives
             String primi = prim.get(i);
-            //System.out.println(compare+" "+primi);
+            //gets the string primitves
+
             outerloop:
+            // has something to reference outside it
             for(int j = 0; j<=compare.length()-primi.length();j++){
+                //goes through all chars in the sequence
                 System.out.println(compare.substring(j,j+primi.length())+" "+primi);
+                //print out whats being compared
                 if(compare.substring(j,j+primi.length()).equals(primi)){
+                    //if the two strings are equal then you add the stuff to everything
                     for(int k = j ; k<j+primi.length();k++){
-                        if(!everything[k]) {
-                            everything[k] = true;
-                        }else{
-                            continue outerloop;
-                        }
+                        //goes through everything in there
+                        everything[k] = true;
+                        // set it to true;
+
                     }
                 }
                 print(everything);
+                //test
             }
         }
         //System.out.println(everything);
