@@ -22,6 +22,33 @@ public class prefix {
         System.out.println();
     }
 
+    public static boolean[] getPrefix(String compare,ArrayList<String> prim,int pidx,boolean[]everything){
+        if(pidx==prim.size()){
+            return everything;
+        }
+        String primi = prim.get(pidx);
+        for(int j = 0; j<=compare.length()-primi.length();j++){
+            //goes through all chars in the sequence
+            System.out.println(compare.substring(j,j+primi.length())+" "+primi);
+            //print out whats being compared
+            if(compare.substring(j,j+primi.length()).equals(primi)){
+                //if the two strings are equal then you add the stuff to everything
+                for(int k = j ; k<j+primi.length();k++){
+                    //goes through everything in there
+                    everything[k] = true;
+                    // set it to true;
+
+                }
+            }
+
+            //test
+        }
+
+        getPrefix(compare,prim,pidx+1,everything);
+        return everything;
+
+    }
+
     public static void main(String[] args) throws IOException {
 
         BufferedReader f = new BufferedReader(new FileReader("prefix.in"));
@@ -47,32 +74,9 @@ public class prefix {
             compare+=nextLine;
             nextLine = f.readLine();
         }
+        boolean[] stuff= new boolean[compare.length()];
 
-        boolean[] everything = new boolean[compare.length()];
-        for(int i = 0; i<prim.size();i++){
-            //goes through all the primitives
-            String primi = prim.get(i);
-            //gets the string primitves
-
-            outerloop:
-            // has something to reference outside it
-            for(int j = 0; j<=compare.length()-primi.length();j++){
-                //goes through all chars in the sequence
-                System.out.println(compare.substring(j,j+primi.length())+" "+primi);
-                //print out whats being compared
-                if(compare.substring(j,j+primi.length()).equals(primi)){
-                    //if the two strings are equal then you add the stuff to everything
-                    for(int k = j ; k<j+primi.length();k++){
-                        //goes through everything in there
-                        everything[k] = true;
-                        // set it to true;
-
-                    }
-                }
-                print(everything);
-                //test
-            }
-        }
+        boolean[] everything = getPrefix(compare,prim,0,stuff);
         //System.out.println(everything);
         //print(everything);
 
