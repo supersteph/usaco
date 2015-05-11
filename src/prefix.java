@@ -22,30 +22,31 @@ public class prefix {
         System.out.println();
     }
 
-    public static boolean[] getPrefix(String compare,ArrayList<String> prim,int pidx,boolean[]everything){
-        if(pidx==prim.size()){
-            return everything;
+    public static int getPrefix(String compare,ArrayList<String> prim,int idx, int count){
+        System.out.println(count);
+        if(count==compare.length()){
+            return count;
         }
-        String primi = prim.get(pidx);
-        for(int j = 0; j<=compare.length()-primi.length();j++){
-            //goes through all chars in the sequence
-            System.out.println(compare.substring(j,j+primi.length())+" "+primi);
-            //print out whats being compared
-            if(compare.substring(j,j+primi.length()).equals(primi)){
-                //if the two strings are equal then you add the stuff to everything
-                for(int k = j ; k<j+primi.length();k++){
-                    //goes through everything in there
-                    everything[k] = true;
-                    // set it to true;
+        if(idx>count){
+            return count-1;
+        }
 
+        for(int i = 0; i<prim.size();i++){
+            //System.out.println(prim.get(i)+" "+compare.substring(idx, idx + prim.get(i).length()));
+            if(idx+prim.get(i).length()<compare.length()) {
+                if (prim.get(i).equals(compare.substring(idx, idx + prim.get(i).length()))) {
+
+                    if (idx + prim.get(i).length() > count) {
+                        count = idx + prim.get(i).length();
+                    }
                 }
             }
-
-            //test
         }
 
-        getPrefix(compare,prim,pidx+1,everything);
-        return everything;
+
+
+        getPrefix(compare,prim,idx+1,count);
+        return count;
 
     }
 
@@ -74,23 +75,8 @@ public class prefix {
             compare+=nextLine;
             nextLine = f.readLine();
         }
-        boolean[] stuff= new boolean[compare.length()];
 
-        boolean[] everything = getPrefix(compare,prim,0,stuff);
-        //System.out.println(everything);
-        //print(everything);
-
-
-        //int max = 0;
-        int sum = 0;
-        for(boolean i :everything){
-            if(i==true){
-                sum++;
-            }else{
-                break;
-            }
-        }
-        out.println(sum);
+        out.println(getPrefix(compare, prim, 0, 0));
 
 
         //System.out.println(sum("010"));
