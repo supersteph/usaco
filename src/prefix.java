@@ -10,7 +10,7 @@ TASK: prefix
 */
 
 public class prefix {
-
+    public static int count = 0;
     public static void print(boolean[] x){
         for(boolean m:x){
             if(m) {
@@ -22,9 +22,20 @@ public class prefix {
         System.out.println();
     }
 
-    public static int getPrefix(String compare,ArrayList<String> prim,int idx, int pidx){
+    public static void getPrefix(String compare,ArrayList<String> prim,int idx, int pidx){
+
+        //System.out.println(pidx);
+        if(idx+prim.get(pidx).length()>compare.length()){
+            return;
+        }
         if(!compare.substring(idx,idx+prim.get(pidx).length()).equals(prim.get(pidx))){
-            return idx+prim.get(pidx).length();
+            return;
+        }
+        if(idx+prim.get(pidx).length()>count){
+            count = idx+prim.get(pidx).length();
+        }
+        for(int i = 0; i<prim.size();i++){
+            getPrefix(compare,prim,idx+prim.get(pidx).length(),i);
         }
     }
 
@@ -54,7 +65,10 @@ public class prefix {
             nextLine = f.readLine();
         }
 
-        out.println(getPrefix(compare, prim, 0, 0));
+        for(int i = 0; i<prim.size();i++){
+            getPrefix(compare,prim,0,i);
+        }
+        out.println(count);
 
 
         //System.out.println(sum("010"));
