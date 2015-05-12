@@ -22,32 +22,10 @@ public class prefix {
         System.out.println();
     }
 
-    public static int getPrefix(String compare,ArrayList<String> prim,int idx, int count){
-        System.out.println(count);
-        if(count==compare.length()){
-            return count;
+    public static int getPrefix(String compare,ArrayList<String> prim,int idx, int pidx){
+        if(!compare.substring(idx,idx+prim.get(pidx).length()).equals(prim.get(pidx))){
+            return idx+prim.get(pidx).length();
         }
-        if(idx>count){
-            return count-1;
-        }
-
-        for(int i = 0; i<prim.size();i++){
-            //System.out.println(prim.get(i)+" "+compare.substring(idx, idx + prim.get(i).length()));
-            if(idx+prim.get(i).length()<compare.length()) {
-                if (prim.get(i).equals(compare.substring(idx, idx + prim.get(i).length()))) {
-
-                    if (idx + prim.get(i).length() > count) {
-                        count = idx + prim.get(i).length();
-                    }
-                }
-            }
-        }
-
-
-
-        getPrefix(compare,prim,idx+1,count);
-        return count;
-
     }
 
     public static void main(String[] args) throws IOException {
