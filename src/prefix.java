@@ -15,7 +15,6 @@ public class prefix {
 
     public static boolean equals(String c, String p, int idx) {
         for (int i = 0; i < p.length(); ++i) {
-            if (i+idx >= c.length()) return false;
             if (c.charAt(idx+i) != p.charAt(i)) return false;
         }
         return true;
@@ -31,7 +30,7 @@ public class prefix {
 
         if (visited.containsKey(idx)) return visited.get(idx);
         //if it contains it, then i return where i am currently
-        System.out.println(idx);
+        //System.out.println(idx);
         int max = idx;
         for(int i = 0; i<prims.size();i++){
             String prim = prims.get(i);
