@@ -11,32 +11,24 @@ TASK: prefix
 
 public class prefix {
     public static int count = 0;
-    public static void print(boolean[] x){
-        for(boolean m:x){
-            if(m) {
-                System.out.print(1);
-            }else{
-                System.out.print(0);
+    public static HashSet<Integer> all = new HashSet<Integer>();
+
+
+    public static int getPrefix(String compare,ArrayList<String> prims,int idx, HashSet visited){
+        System.out.println(visited);
+
+        if (visited.contains(idx)) return idx;
+        System.out.println(idx);
+        int max = idx;
+        for(int i = 0; i<prims.size();i++){
+            String prim = prims.get(i);
+            if (compare.indexOf(prim,idx) == idx) {
+                int len = getPrefix(compare, prims, idx+prim.length(), visited);
+                if (len > max) max = len;
             }
         }
-        System.out.println();
-    }
-
-    public static void getPrefix(String compare,ArrayList<String> prim,int idx, int pidx){
-
-        //System.out.println(pidx);
-        if(idx+prim.get(pidx).length()>compare.length()){
-            return;
-        }
-        if(!compare.substring(idx,idx+prim.get(pidx).length()).equals(prim.get(pidx))){
-            return;
-        }
-        if(idx+prim.get(pidx).length()>count){
-            count = idx+prim.get(pidx).length();
-        }
-        for(int i = 0; i<prim.size();i++){
-            getPrefix(compare,prim,idx+prim.get(pidx).length(),i);
-        }
+        visited.add(idx);
+        return max;
     }
 
     public static void main(String[] args) throws IOException {
@@ -65,9 +57,7 @@ public class prefix {
             nextLine = f.readLine();
         }
 
-        for(int i = 0; i<prim.size();i++){
-            getPrefix(compare,prim,0,i);
-        }
+        int count = getPrefix(compare,prim,0,new HashSet());
         out.println(count);
 
 
