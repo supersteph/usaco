@@ -15,9 +15,14 @@ public class prefix {
 
 
     public static int getPrefix(String compare,ArrayList<String> prims,int idx, HashSet visited){
+        //compare is the string that i am trying to make the prefix out of
+        //prim is all of the primitives
+        //idx is the place you are currently
+        //visited is all of the places that i have gone to
         System.out.println(visited);
 
         if (visited.contains(idx)) return idx;
+        //if it contains it, then i return where i am currently
         System.out.println(idx);
         int max = idx;
         for(int i = 0; i<prims.size();i++){
@@ -29,6 +34,7 @@ public class prefix {
         }
         visited.add(idx);
         return max;
+        //return the maximum len
     }
 
     public static void main(String[] args) throws IOException {
