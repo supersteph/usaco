@@ -14,6 +14,10 @@ public class prefix {
     public static HashSet<Integer> all = new HashSet<Integer>();
 
     public static boolean equals(String c, String p, int idx) {
+        if(idx+p.length()>c.length()){
+            return false;
+        }
+
         for (int i = 0; i < p.length(); ++i) {
             if (c.charAt(idx+i) != p.charAt(i)) return false;
         }
@@ -26,7 +30,7 @@ public class prefix {
         //prim is all of the primitives
         //idx is the place you are currently
         //visited is all of the places that i have gone to
-        System.out.println(visited);
+        //System.out.println(visited);
 
         if (visited.containsKey(idx)) return visited.get(idx);
         //if it contains it, then i return where i am currently
@@ -34,11 +38,10 @@ public class prefix {
         int max = idx;
         for(int i = 0; i<prims.size();i++){
             String prim = prims.get(i);
-            if(idx+prim.length()<=compare.length()) {
-                if (equals(compare,prim,idx)) {
-                    int len = getPrefix(compare, prims, idx + prim.length(), visited);
-                    if (len > max) max = len;
-                }
+            if (equals(compare,prim,idx)) {
+                int len = getPrefix(compare, prims, idx + prim.length(), visited);
+                if (len > max) max = len;
+
             }
         }
         visited.put(idx, max);
