@@ -13,26 +13,36 @@ public class prefix {
     public static int count = 0;
     public static HashSet<Integer> all = new HashSet<Integer>();
 
+    public static boolean equals(String c, String p, int idx) {
+        for (int i = 0; i < p.length(); ++i) {
+            if (i+idx >= c.length()) return false;
+            if (c.charAt(idx+i) != p.charAt(i)) return false;
+        }
+        return true;
+    }
 
-    public static int getPrefix(String compare,ArrayList<String> prims,int idx, HashSet visited){
+
+    public static int getPrefix(String compare,ArrayList<String> prims,int idx, HashMap<Integer,Integer> visited){
         //compare is the string that i am trying to make the prefix out of
         //prim is all of the primitives
         //idx is the place you are currently
         //visited is all of the places that i have gone to
         System.out.println(visited);
 
-        if (visited.contains(idx)) return idx;
+        if (visited.containsKey(idx)) return visited.get(idx);
         //if it contains it, then i return where i am currently
         System.out.println(idx);
         int max = idx;
         for(int i = 0; i<prims.size();i++){
             String prim = prims.get(i);
-            if (compare.indexOf(prim,idx) == idx) {
-                int len = getPrefix(compare, prims, idx+prim.length(), visited);
-                if (len > max) max = len;
+            if(idx+prim.length()<=compare.length()) {
+                if (equals(compare,prim,idx)) {
+                    int len = getPrefix(compare, prims, idx + prim.length(), visited);
+                    if (len > max) max = len;
+                }
             }
         }
-        visited.add(idx);
+        visited.put(idx, max);
         return max;
         //return the maximum len
     }
@@ -63,7 +73,9 @@ public class prefix {
             nextLine = f.readLine();
         }
 
-        int count = getPrefix(compare,prim,0,new HashSet());
+        HashMap<Integer,Integer> x = new HashMap<Integer, Integer>();
+
+        int count = getPrefix(compare,prim,0,x);
         out.println(count);
 
 
