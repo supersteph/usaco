@@ -15,6 +15,7 @@ public class nocows {
     static int all= 0;
 
     public static int getcount(ArrayList<ArrayList<Integer>> x){
+        //print(x);
         int sum = 0;
         for(int i = 0; i<x.size();i++){
             sum+=x.get(i).size();
@@ -30,8 +31,7 @@ public class nocows {
 
 
     public static void expandpedigree(ArrayList<ArrayList<Integer>> x, int idx,int height){
-        print(x);
-        System.out.println(idx+ " " + height);
+        System.out.println(idx);
         if(height==totheight){
             if(getcount(x)==all){
                 num++;
@@ -39,20 +39,31 @@ public class nocows {
             return;
 
         }
+        //System.out.println(idx+ " " + height+ " " + x.get(height).size());
 
-        if(idx>=x.get(height).size()){
+        if(idx==x.get(height).size()){
             x.add(new ArrayList<Integer>());
             expandpedigree(x, 0, height + 1);
         }
+        //print(x);
 
-        int k = x.get(height).get(idx);
 
-        ArrayList<ArrayList<Integer>> m = (ArrayList<ArrayList<Integer>>)x.clone();
-        m.get(height+1).add(2*k);
-        m.get(height+1).add(2*k+1);
+        if(idx != x.get(height).size()||height==totheight){
+            //System.out.println(idx+ " " + height+ " " + x.get(height).size());
+            int k = x.get(height).get(idx);
 
-        expandpedigree(m,idx+1,height);
-        expandpedigree(x,idx+1,height);
+            ArrayList<ArrayList<Integer>> m = (ArrayList<ArrayList<Integer>>)x.clone();
+            ArrayList<ArrayList<Integer>> p = (ArrayList<ArrayList<Integer>>)m.clone();
+            m.get(height+1).add(2*k);
+            m.get(height+1).add(2*k+1);
+
+            expandpedigree(m,idx+1,height);
+            expandpedigree(p,idx+1,height);
+
+        } else {
+            return;
+        }
+
 
 
 
@@ -83,7 +94,7 @@ public class nocows {
         expandpedigree(x,0,0);
 
         out.println(num);
-        System.out.println(num);
+        //System.out.println(num);
 
         
 

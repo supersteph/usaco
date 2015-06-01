@@ -7,8 +7,8 @@ TASK: castle
 /**
  * How to solve it:
  * So I read in all of the data, and I add a 1 if it is a wall, and I just start at 1, and keep on going right until
- * I might be able to go up or down, and when it can i add up the spaces in the room, when i try to remove a wall, i
- * try to remove all the walls in the middle and see if there are any rooms that are bigger
+ * I might be able to go up or down, and when it can i add up the spaces in the module, when i try to remove a wall, i
+ * try to remove all the walls in the middle and see if there are any modules that are bigger
  *
  */
 
@@ -88,6 +88,23 @@ public class castle {
 
     }
 
+    
+
+
+    public static ArrayList<ArrayList<module>> getmodulesizes(int[][]x) {
+        ArrayList<ArrayList<module>> modules = new ArrayList<ArrayList<module>>();
+        HashSet<module> explored = new HashSet<module>();
+        for (int i = 1; i < x.length - 1; i += 2) {
+            for (int j = 1; j < x[0].length - 1; j+=2) {
+                if(x[i][j]==0&&!explored.contains(new module(i,j))) {
+                    modules.add(expand(i, j, explored, x));
+                }
+
+            }
+        }
+        return modules;
+    }
+
     public static ArrayList<module> expand(int i, int j, HashSet<module> y, int[][] x){
         ArrayList<module> stuff = new ArrayList<module>();
         ArrayList<module> fina = new ArrayList<module>();
@@ -139,21 +156,6 @@ public class castle {
     }
 
 
-    public static ArrayList<ArrayList<module>> getRoomsizes(int[][]x) {
-        ArrayList<ArrayList<module>> rooms = new ArrayList<ArrayList<module>>();
-        HashSet<module> explored = new HashSet<module>();
-        for (int i = 1; i < x.length - 1; i += 2) {
-            for (int j = 1; j < x[0].length - 1; j+=2) {
-                if(x[i][j]==0&&!explored.contains(new module(i,j))) {
-                    rooms.add(expand(i, j, explored, x));
-                }
-
-            }
-        }
-        return rooms;
-    }
-
-
 
     public static void main(String[] args) throws IOException {
 
@@ -191,12 +193,12 @@ public class castle {
             }
         }
 
-        ArrayList<ArrayList<module>> roomsbefore = getRoomsizes(x);
-        out.println(roomsbefore.size());
+        ArrayList<ArrayList<module>> modulesbefore = getmodulesizes(x);
+        out.println(modulesbefore.size());
         int max = 0;
-        for(int i = 0; i<roomsbefore.size();i++){
-            if(roomsbefore.get(i).size()>max){
-                max = roomsbefore.get(i).size();
+        for(int i = 0; i<modulesbefore.size();i++){
+            if(modulesbefore.get(i).size()>max){
+                max = modulesbefore.get(i).size();
             }
         }
         out.println(max);
