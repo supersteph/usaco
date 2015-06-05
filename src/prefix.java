@@ -25,26 +25,24 @@ public class prefix {
     }
 
 
-    public static int getPrefix(String compare,ArrayList<String> prims,int idx, HashMap<Integer,Integer> visited){
-        //compare is the string that i am trying to make the prefix out of
-        //prim is all of the primitives
-        //idx is the place you are currently
-        //visited is all of the places that i have gone to
-        //System.out.println(visited);
-
-        if (visited.containsKey(idx)) return visited.get(idx);
-        //if it contains it, then i return where i am currently
-        //System.out.println(idx);
-        int max = idx;
-        for(int i = 0; i<prims.size();i++){
-            String prim = prims.get(i);
-            if (equals(compare,prim,idx)) {
-                int len = getPrefix(compare, prims, idx + prim.length(), visited);
-                if (len > max) max = len;
-
+    public static int getPrefix(ArrayList<String> comp, String compare){
+        int max = 0;
+        ArrayList<Integer> x = new ArrayList<Integer>();
+        x.add(0);
+        while(x.size()!=0){
+            if(x.get(0)>max){
+                max = x.get(0);
             }
+            for(String i:comp){
+                if(x.get(0)+i.length()<=compare.length()&&!x.contains( x.get(0) + i.length())) {
+                    if (compare.substring(x.get(0), x.get(0) + i.length()).equals(i)) {
+                        x.add(x.get(0) + i.length());
+                    }
+                }
+            }
+            x.remove(0);
         }
-        visited.put(idx, max);
+
         return max;
         //return the maximum len
     }
@@ -75,9 +73,9 @@ public class prefix {
             nextLine = f.readLine();
         }
 
-        HashMap<Integer,Integer> x = new HashMap<Integer, Integer>();
+        //HashMap<Integer,Integer> x = new HashMap<Integer, Integer>();
 
-        int count = getPrefix(compare,prim,0,x);
+        int count = getPrefix(prim,compare);
         out.println(count);
 
 
