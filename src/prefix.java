@@ -26,25 +26,32 @@ public class prefix {
 
 
     public static int getPrefix(ArrayList<String> comp, String compare){
-        int max = 0;
-        ArrayList<Integer> x = new ArrayList<Integer>();
-        x.add(0);
-        while(x.size()!=0){
-            if(x.get(0)>max){
-                max = x.get(0);
+
+        boolean[] x = new boolean[compare.length()];
+        int max=0;
+        for(int i = 0; i<x.length;i++){
+            if(x[i]==true){
+                continue;
             }
-            for(String i:comp){
-                if(x.get(0)+i.length()<=compare.length()&&!x.contains( x.get(0) + i.length())) {
-                    if (compare.substring(x.get(0), x.get(0) + i.length()).equals(i)) {
-                        x.add(x.get(0) + i.length());
+            else if(i>max){
+                return max;
+            }
+            else{
+                for(String p:comp){
+                    if(i+p.length()>x.length){
+                        continue;
+                    }
+                    if(compare.substring(i,i+p.length()).equals(p)){
+                        x[i]= true;
+                        if(i+p.length()>max){
+                            max = i+p.length();
+                        }
                     }
                 }
             }
-            x.remove(0);
         }
 
-        return max;
-        //return the maximum len
+        return x.length;
     }
 
     public static void main(String[] args) throws IOException {
