@@ -14,9 +14,6 @@ public class prefix {
     public static HashSet<Integer> all = new HashSet<Integer>();
 
     public static boolean equals(String c, String p, int idx) {
-        if(idx+p.length()>c.length()){
-            return false;
-        }
 
         for (int i = 0; i < p.length(); ++i) {
             if (c.charAt(idx+i) != p.charAt(i)) return false;
@@ -24,12 +21,32 @@ public class prefix {
         return true;
     }
 
+    public static class primitive implements Comparable{
+        String x;
+        primitive(String stuff){
+            x = stuff;
+        }
 
-    public static int getPrefix(ArrayList<String> comp, String compare){
+        @Override
+        public String toString() {
+            return x;
+        }
+
+        @Override
+        public int compareTo(Object o) {
+            primitive k = (primitive)o;
+
+            return k.x.length()-x.length();
+        }
+    }
+
+
+    public static int getPrefix(ArrayList<primitive> comp, String compare){
 
         boolean[] x = new boolean[compare.length()];
         int max=0;
         for(int i = 0; i<x.length;i++){
+            //System.out.println(max+ " "+ i);
             if(x[i]==true){
                 continue;
             }
@@ -37,11 +54,15 @@ public class prefix {
                 return max;
             }
             else{
-                for(String p:comp){
-                    if(i+p.length()>x.length){
+                for(primitive v:comp){
+                    String p = v.x;
+                    if(i+p.length()>compare.length()){
                         continue;
                     }
-                    if(compare.substring(i,i+p.length()).equals(p)){
+                    if(x[i+p.length()-1]==true){
+                        continue;
+                    }
+                    if(equals(compare,p,i)){
                         x[i]= true;
                         if(i+p.length()>max){
                             max = i+p.length();
@@ -51,7 +72,7 @@ public class prefix {
             }
         }
 
-        return x.length;
+        return max;
     }
 
     public static void main(String[] args) throws IOException {
@@ -61,13 +82,13 @@ public class prefix {
         // input file name goes above
 
         PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("prefix.out")));
-        ArrayList<String> prim = new ArrayList<String>();
+        ArrayList<primitive> prim = new ArrayList<primitive>();
         String line = f.readLine();
         while(!line.equals(".")) {
             //System.out.println(line);
             StringTokenizer st= new StringTokenizer(line);
             while(st.hasMoreTokens()){
-                prim.add(st.nextToken());
+                prim.add(new primitive(st.nextToken()));
             }
             line = f.readLine();
         }
@@ -79,6 +100,10 @@ public class prefix {
             compare+=nextLine;
             nextLine = f.readLine();
         }
+
+        Collections.sort(prim);
+
+        System.out.println(prim);
 
         //HashMap<Integer,Integer> x = new HashMap<Integer, Integer>();
 
