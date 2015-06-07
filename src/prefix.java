@@ -14,6 +14,7 @@ public class prefix {
     public static HashSet<Integer> all = new HashSet<Integer>();
 
     public static boolean equals(String c, String p, int idx) {
+        //go through all the chars, and if any of the chars aren't equal then you return false
 
         for (int i = 0; i < p.length(); ++i) {
             if (c.charAt(idx+i) != p.charAt(i)) return false;
@@ -55,32 +56,31 @@ public class prefix {
     public static int getPrefix(ArrayList<primitive> comp, String compare){
 
         boolean[] x = new boolean[compare.length()+1];
+        // new boolean of all falses
         int max=0;
         for(int i = 0; i<x.length;i++){
-            System.out.println(i);
-            //System.out.println(max+ " "+ i);
-            if(x[i]==true){
-                //System.out.println(x[i]);
-                continue;
-            }
-            else if(i>max){
+            // goes through all the integers in the array
+            if(i>max){
+                // if you are past the max, then you know you went too far so you return max
                 return max;
             }
             else{
+                // other wise you go through all the primitives
                 for(primitive v:comp){
-                    System.out.println(v+ " "+ i + " " + max);
-                    print(x);
 
                     String p = v.x;
+                    //check to see if your gonna go too far
                     if(i+p.length()>compare.length()){
                         continue;
                     }
+                    //if you already explored this one, then you continue
                     if(x[i+p.length()]==true){
                         continue;
                     }
+                    // if the primitive is equal to the current substring starting at index then you set x[i+p.length] as explored
                     if(equals(compare,p,i)){
-                        x[i]= true;
-                        //x[i+p.length()] = true;
+                        x[i+p.length()]= true;
+                        //if your past max, you make max bigger
                         if(i+p.length()>max){
                             max = i+p.length();
                         }
@@ -88,6 +88,7 @@ public class prefix {
                 }
             }
         }
+        //return the max
 
         return max;
     }
@@ -120,7 +121,7 @@ public class prefix {
 
         Collections.sort(prim);
 
-        System.out.println(prim);
+        //System.out.println(prim);
 
         //HashMap<Integer,Integer> x = new HashMap<Integer, Integer>();
 
