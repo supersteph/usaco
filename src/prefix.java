@@ -40,14 +40,27 @@ public class prefix {
         }
     }
 
+    public static void print(boolean[]y){
+        for(boolean x:y){
+            if(x){
+                System.out.print(1);
+            } else{
+                System.out.print(0);
+            }
+        }
+        System.out.println();
+    }
+
 
     public static int getPrefix(ArrayList<primitive> comp, String compare){
 
-        boolean[] x = new boolean[compare.length()];
+        boolean[] x = new boolean[compare.length()+1];
         int max=0;
         for(int i = 0; i<x.length;i++){
+            System.out.println(i);
             //System.out.println(max+ " "+ i);
             if(x[i]==true){
+                //System.out.println(x[i]);
                 continue;
             }
             else if(i>max){
@@ -55,15 +68,19 @@ public class prefix {
             }
             else{
                 for(primitive v:comp){
+                    System.out.println(v+ " "+ i + " " + max);
+                    print(x);
+
                     String p = v.x;
                     if(i+p.length()>compare.length()){
                         continue;
                     }
-                    if(x[i+p.length()-1]==true){
+                    if(x[i+p.length()]==true){
                         continue;
                     }
                     if(equals(compare,p,i)){
                         x[i]= true;
+                        //x[i+p.length()] = true;
                         if(i+p.length()>max){
                             max = i+p.length();
                         }
