@@ -52,21 +52,74 @@ public class prefix {
         System.out.println();
     }
 
+    public static boolean togetridof(ArrayList<primitive> comp, String compare, int idx) {
+
+        //System.out.println(compare);
+
+        boolean[] x = new boolean[compare.length()+1];
+        // new boolean of all falses
+        int max = 0;
+        for (int i = 0; i < x.length; i++) {
+            System.out.println(compare);
+
+            //print(x);
+            // goes through all the integers in the array
+            if (x[i] != true && i != 0) {
+                continue;
+            } else {
+                // other wise you go through all the primitives
+                for (int j = 0; j<comp.size();j++) {
+
+                    //System.out.println(v+" "+i);
+
+                    String p = comp.get(j).x;
+                    print(x);
+                    System.out.println(p);
+                    //check to see if your gonna go too far
+                    if (i + p.length() > compare.length()) {
+                        continue;
+                    }
+                    //if you already explored this one, then you continue
+                    if (x[i + p.length()] == true) {
+                        continue;
+                    }
+                    // if the primitive is equal to the current substring starting at index then you set x[i+p.length] as explored
+                    if (equals(compare, p, i)) {
+                        x[i + p.length()] = true;
+                        //if your past max, you make max bigger
+                        if (i + p.length() > max) {
+                            max = i + p.length();
+                        }
+                    }
+                }
+            }
+        }
+        //return the max
+        return max == x.length-1;
+    }
+
 
     public static int getPrefix(ArrayList<primitive> comp, String compare){
+        //System.out.println();
 
         boolean[] x = new boolean[compare.length()+1];
         // new boolean of all falses
         int max=0;
         for(int i = 0; i<x.length;i++){
+
+            //print(x);
             // goes through all the integers in the array
             if(i>max){
                 // if you are past the max, then you know you went too far so you return max
                 return max;
             }
+            if(x[i]!=true&&i!=0){
+                continue;
+            }
             else{
                 // other wise you go through all the primitives
                 for(primitive v:comp){
+                    //System.out.println(v+" "+i);
 
                     String p = v.x;
                     //check to see if your gonna go too far
@@ -102,6 +155,7 @@ public class prefix {
         PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("prefix.out")));
         ArrayList<primitive> prim = new ArrayList<primitive>();
         String line = f.readLine();
+
         while(!line.equals(".")) {
             //System.out.println(line);
             StringTokenizer st= new StringTokenizer(line);
@@ -120,6 +174,20 @@ public class prefix {
         }
 
         Collections.sort(prim);
+
+        for(int i = 0; i< prim.size()-1;i++){
+
+            primitive m = prim.get(i);
+            //System.out.println(m);
+            String x = m.x;
+            prim.remove(i);
+            if(!togetridof(prim,x,i)){
+                System.out.println(m);
+                prim.add(i,m);
+            }
+        }
+
+        System.out.println(prim);
 
         //System.out.println(prim);
 
