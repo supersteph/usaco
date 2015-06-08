@@ -17,14 +17,15 @@ public class prefix {
         //go through all the chars, and if any of the chars aren't equal then you return false
 
         for (int i = 0; i < p.length(); ++i) {
-            if (c.charAt(idx+i) != p.charAt(i)) return false;
+            if (c.charAt(idx + i) != p.charAt(i)) return false;
         }
         return true;
     }
 
-    public static class primitive implements Comparable{
+    public static class primitive implements Comparable {
         String x;
-        primitive(String stuff){
+
+        primitive(String stuff) {
             x = stuff;
         }
 
@@ -35,17 +36,17 @@ public class prefix {
 
         @Override
         public int compareTo(Object o) {
-            primitive k = (primitive)o;
+            primitive k = (primitive) o;
 
-            return k.x.length()-x.length();
+            return k.x.length() - x.length();
         }
     }
 
-    public static void print(boolean[]y){
-        for(boolean x:y){
-            if(x){
+    public static void print(boolean[] y) {
+        for (boolean x : y) {
+            if (x) {
                 System.out.print(1);
-            } else{
+            } else {
                 System.out.print(0);
             }
         }
@@ -53,71 +54,47 @@ public class prefix {
     }
 
 
-    public static int getPrefix(ArrayList<primitive> comp, String compare, int idx){
+    public static int getPrefix(ArrayList<primitive> comp, String compare) {
         //System.out.println();
 
-        boolean[] x = new boolean[compare.length()+1];
+        boolean[] x = new boolean[compare.length() + 1];
         // new boolean of all falses
-        int max=0;
-        for(int i = 0; i<x.length;i++){
+        int max = 0;
+        for (int i = 0; i < x.length; i++) {
 
             //print(x);
             // goes through all the integers in the array
-            if(i>max){
+            if (i > max) {
                 // if you are past the max, then you know you went too far so you return max
                 return max;
             }
-            if(x[i]!=true&&i!=0){
+            if (x[i] != true && i != 0) {
                 continue;
-            }
-            else{
+            } else {
                 // other wise you go through all the primitives
-                if(idx==-1){
-                    for(primitive v:comp){
-                        //System.out.println(v+" "+i);
 
-                        String p = v.x;
-                        //check to see if your gonna go too far
-                        if(i+p.length()>compare.length()){
-                            continue;
-                        }
-                        //if you already explored this one, then you continue
-                        if(x[i+p.length()]==true){
-                            continue;
-                        }
-                        // if the primitive is equal to the current substring starting at index then you set x[i+p.length] as explored
-                        if(equals(compare,p,i)){
-                            x[i+p.length()]= true;
-                            //if your past max, you make max bigger
-                            if(i+p.length()>max){
-                                max = i+p.length();
-                            }
-                        }
+                for (primitive v : comp) {
+                    //System.out.println(v+" "+i);
+                    String p = v.x;
+                    //check to see if your gonna go too far
+
+                    if (i + p.length() > compare.length()) {
+                        continue;
                     }
-                } else{
-                    for(int j = idx;j<comp.size();j++){
-                        //System.out.println(v+" "+i);
-
-
-                        String p = comp.get(j).x;
-                        //check to see if your gonna go too far
-                        if(i+p.length()>compare.length()){
-                            continue;
-                        }
-                        //if you already explored this one, then you continue
-                        if(x[i+p.length()]==true){
-                            continue;
-                        }
-                        // if the primitive is equal to the current substring starting at index then you set x[i+p.length] as explored
-                        if(equals(compare,p,i)){
-                            x[i+p.length()]= true;
-                            //if your past max, you make max bigger
-                            if(i+p.length()>max){
-                                max = i+p.length();
-                            }
+                    //if you already explored this one, then you continue
+                    if (x[i + p.length()] == true) {
+                        continue;
+                    }
+                    // if the primitive is equal to the current substring starting at index then you set x[i+p.length] as explored
+                    if (equals(compare, p, i)) {
+                        x[i + p.length()] = true;
+                        //if your past max, you make max bigger
+                        if (i + p.length() > max) {
+                            max = i + p.length();
                         }
                     }
                 }
+
             }
         }
         //return the max
@@ -168,7 +145,7 @@ public class prefix {
             String x = m.x;
             prim.remove(i);
             //System.out.println(prim);
-            if(getPrefix(prim,x,i+1)!=x.length()){
+            if(getPrefix(prim,x)!=x.length()){
                 prim.add(i, m);
             } else{
                 //System.out.println(x);
@@ -179,13 +156,15 @@ public class prefix {
 
 
 
-        //System.out.println(prim);
+
+
+        System.out.println(prim);
 
         //System.out.println(prim);
 
         //HashMap<Integer,Integer> x = new HashMap<Integer, Integer>();
 
-        int count = getPrefix(prim,compare,-1);
+        int count = getPrefix(prim,compare);
         out.println(count);
 
 
