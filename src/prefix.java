@@ -10,54 +10,27 @@ TASK: prefix
 */
 
 public class prefix {
-    public static int count = 0;
-    public static HashSet<Integer> all = new HashSet<Integer>();
 
     public static boolean equals(String c, String p, int idx) {
         //go through all the chars, and if any of the chars aren't equal then you return false
-
         for (int i = 0; i < p.length(); ++i) {
             if (c.charAt(idx + i) != p.charAt(i)) return false;
         }
         return true;
     }
 
-    public static class primitive implements Comparable {
-        String x;
-
-        primitive(String stuff) {
-            x = stuff;
+    static Comparator<String> lengthComp = new Comparator<String>() {
+        public int compare(String s1, String s2) {
+            return s2.length() - s1.length();
         }
-
-        @Override
-        public String toString() {
-            return x;
-        }
-
-        @Override
-        public int compareTo(Object o) {
-            primitive k = (primitive) o;
-
-            return k.x.length() - x.length();
-        }
-    }
-
-    public static void print(boolean[] y) {
-        for (boolean x : y) {
-            if (x) {
-                System.out.print(1);
-            } else {
-                System.out.print(0);
-            }
-        }
-        System.out.println();
-    }
+    };
 
 
-    public static int getPrefix(ArrayList<primitive> comp, String compare) {
+    public static int getPrefix(ArrayList<String> comp, String compare, int idx) {
         //System.out.println();
 
         boolean[] x = new boolean[compare.length() + 1];
+        x[0] = true;
         // new boolean of all falses
         int max = 0;
         for (int i = 0; i < x.length; i++) {
@@ -68,34 +41,33 @@ public class prefix {
                 // if you are past the max, then you know you went too far so you return max
                 return max;
             }
-            if (x[i] != true && i != 0) {
+            if (x[i] != true) {
                 continue;
-            } else {
-                // other wise you go through all the primitives
+            }
 
-                for (primitive v : comp) {
-                    //System.out.println(v+" "+i);
-                    String p = v.x;
-                    //check to see if your gonna go too far
-
-                    if (i + p.length() > compare.length()) {
-                        continue;
-                    }
-                    //if you already explored this one, then you continue
-                    if (x[i + p.length()] == true) {
-                        continue;
-                    }
-                    // if the primitive is equal to the current substring starting at index then you set x[i+p.length] as explored
-                    if (equals(compare, p, i)) {
-                        x[i + p.length()] = true;
-                        //if your past max, you make max bigger
-                        if (i + p.length() > max) {
-                            max = i + p.length();
-                        }
-                    }
+            // other wise you go through all the primitives
+            for (int j = idx; j < comp.size(); j++) {
+                String p = comp.get(j);
+                if (i + p.length() > compare.length()) {
+                    continue;
                 }
 
+                //if you already explored this one, then you continue
+                if (x[i + p.length()] == true) {
+                    continue;
+                }
+
+                // if the primitive is equal to the current substring starting at index then you set x[i+p.length] as explored
+                if (equals(compare, p, i)) {
+                    x[i + p.length()] = true;
+                    //if your past max, you make max bigger
+                    if (i + p.length() > max) {
+                        max = i + p.length();
+                    }
+                }
             }
+
+
         }
         //return the max
 
@@ -109,91 +81,43 @@ public class prefix {
         // input file name goes above
 
         PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("prefix.out")));
-        ArrayList<primitive> prim = new ArrayList<primitive>();
+        ArrayList<String> prim = new ArrayList<String>();
         String line = f.readLine();
 
-        while(!line.equals(".")) {
+        while (!line.equals(".")) {
             //System.out.println(line);
-            StringTokenizer st= new StringTokenizer(line);
-            while(st.hasMoreTokens()){
-                prim.add(new primitive(st.nextToken()));
+            StringTokenizer st = new StringTokenizer(line);
+            while (st.hasMoreTokens()) {
+                prim.add(st.nextToken());
             }
             line = f.readLine();
         }
-        //String x = f.readLine();
-        String compare = "";
-        String nextLine = f.readLine();
-        while(nextLine!=null){
 
-            compare+=nextLine;
+        StringBuilder sb = new StringBuilder();
+        String nextLine = f.readLine();
+        while (nextLine != null) {
+            sb.append(nextLine);
             nextLine = f.readLine();
         }
+        String compare = sb.toString();
 
-        Collections.sort(prim);
-        ArrayList<primitive> p = new ArrayList<primitive>();
-        p.add(new primitive("A"));
-        p.add(new primitive("B"));
-        //System.out.println(togetridof(p,"A",0));
+        Collections.sort(prim, lengthComp);
+        ArrayList<String> nprim = new ArrayList<String>();
 
 
-        for(int i = 0; i< prim.size()-1;i++){
-
-            primitive m = prim.get(i);
-
-            //System.out.println(i);
-            //System.out.println(m);
-            String x = m.x;
-            prim.remove(i);
-            //System.out.println(prim);
-            if(getPrefix(prim,x)!=x.length()){
-                prim.add(i, m);
-            } else{
-                //System.out.println(x);
-                i--;
+        for (int i = 0; i < prim.size() - 1; i++) {
+            String m = prim.get(i);
+            if (getPrefix(prim, m, i + 1) != m.length()) {
+                nprim.add(m);
             }
         }
 
+        nprim.add(prim.get(prim.size() - 1));
+        System.out.println(nprim);
 
-
-
-
-
-        System.out.println(prim);
-
-        //System.out.println(prim);
-
-        //HashMap<Integer,Integer> x = new HashMap<Integer, Integer>();
-
-        int count = getPrefix(prim,compare);
+        int count = getPrefix(nprim, compare, 0);
         out.println(count);
-
-
-        //System.out.println(sum("010"));
-
-
-        //int[] l = {0,1,0};
-        //int[] k = {1,0,1};
-        //ArrayList<confg> test = new ArrayList<confg>();
-        //test.add(new confg(l,0));
-        //test.add(new confg(k,0));
-        //quicksort(0, 1,test);
-
-        //System.out.println(everything.contains(x));
-
-
-
-
-
-
-
-
-
-        //out.println(i);
-
         out.close();
         System.exit(0);
-
-
-
     }
 }

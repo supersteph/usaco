@@ -26,14 +26,35 @@ public class nocows {
         for(int i = 0; i<x.size();i++){
             System.out.println(x.get(i));
         }
+
         //System.out.println();
     }
 
+    public static class pedi {
 
-    public static void expandpedigree(ArrayList<ArrayList<Integer>> x, int idx,int height){
+        int count;
+        int height;
+        int width;
+        ArrayList<ArrayList<Integer>> x = new ArrayList<ArrayList<Integer>>();
+
+        public pedi(ArrayList<ArrayList<Integer>> y){
+            x = y;
+        }
+
+        public pedi clone(){
+
+            pedi m = new pedi((ArrayList<ArrayList<Integer>>)x.clone());
+            m.count = count;
+            return m;
+
+        }
+
+    }
+
+    public static void expandpedigree(pedi x, int idx,int height) {
         System.out.println(idx);
-        if(height==totheight){
-            if(getcount(x)==all){
+        if (height == totheight-1) {
+            if (x.count == all) {
                 num++;
             }
             return;
@@ -41,36 +62,28 @@ public class nocows {
         }
         //System.out.println(idx+ " " + height+ " " + x.get(height).size());
 
-        if(idx==x.get(height).size()){
-            x.add(new ArrayList<Integer>());
+        if (idx == x.x.get(height).size()) {
+            x.x.add(new ArrayList<Integer>());
             expandpedigree(x, 0, height + 1);
+            return;
         }
         //print(x);
 
 
-        if(idx != x.get(height).size()||height==totheight){
+        if (idx != x.x.get(height).size() || height == totheight) {
             //System.out.println(idx+ " " + height+ " " + x.get(height).size());
-            int k = x.get(height).get(idx);
+            int k = x.x.get(height).get(idx);
 
-            ArrayList<ArrayList<Integer>> m = (ArrayList<ArrayList<Integer>>)x.clone();
-            ArrayList<ArrayList<Integer>> p = (ArrayList<ArrayList<Integer>>)m.clone();
-            m.get(height+1).add(2*k);
-            m.get(height+1).add(2*k+1);
+            pedi m = x.clone();
+            pedi p =  m.clone();
+            m.x.get(height + 1).add(2 * k);
+            m.x.get(height + 1).add(2 * k + 1);
 
-            expandpedigree(m,idx+1,height);
-            expandpedigree(p,idx+1,height);
+            expandpedigree(m, idx + 1, height);
+            expandpedigree(p, idx + 1, height);
 
-        } else {
-            return;
         }
-
-
-
-
-
-
     }
-
 
     public static void main(String[] args) throws IOException {
 
@@ -91,7 +104,9 @@ public class nocows {
         m.add(0);
         x.add(m);
         x.add(new ArrayList<Integer>());
-        expandpedigree(x,0,0);
+        pedi p = new pedi(x);
+        p.count = 1;
+        expandpedigree(p, 0, 0);
 
         out.println(num);
         //System.out.println(num);
