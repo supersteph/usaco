@@ -10,79 +10,86 @@ TASK: nocows
 */
 
 public class nocows {
-    static int num = 0;
-    static int totheight=0;
-    static int all= 0;
+    public static void print(int[] x){
+        for(int i :x){
+            System.out.print(i + " ");
+        }
+    }
 
-    public static int getcount(ArrayList<ArrayList<Integer>> x){
-        //print(x);
+    public static int choose(int big, int small){
+        int first = 1;
+        int fac = 1;
+        for(int i = big; i>big-small;i--){
+            first *= i;
+        }
+        //System.out.println(first);
+        for(int i = small; i >0;i--){
+            fac *=i;
+
+        }
+        //System.out.println(fac);
+        return first/fac;
+    }
+    public static class pedi{
+        int[] stuff;
+        int[] counts;
+        int count;
+        pedi(int height){
+            stuff = new int[height];
+            stuff[0]=1;
+            counts = new int[height];
+            counts[0]=1;
+            count = 0;
+
+        }
+        pedi(pedi x){
+            this.stuff = x.stuff.clone();
+            this.counts = x.counts.clone();
+            this.count = x.count;
+        }
+
+
+    }
+    public static int expandpedigree(int count,int height) {
+        ArrayList<pedi> x = new ArrayList<pedi>();
         int sum = 0;
-        for(int i = 0; i<x.size();i++){
-            sum+=x.get(i).size();
+        x.add(new pedi(height));
+        while(x.size()!=0){
+
+            if(x.get(0).count==height-1){
+                int k = 0;
+                for(int i = 0; i <height;i++){
+                    k+=x.get(0).stuff[i];
+
+                }
+                if(k == count){
+                    int pro = 1;
+                    for(int i = 0; i <height;i++){
+                        pro*=x.get(0).counts[i];
+
+                    }
+                    sum+=pro;
+
+                }
+                x.remove(0);
+                continue;
+
+            }
+            int m = x.get(0).stuff[x.get(0).count];
+
+            for(int i = 2; i<=2*m;i+=2){
+                pedi nex = new pedi(x.get(0));
+                nex.stuff[nex.count+1] = i;
+                nex.counts[nex.count+1] = choose(nex.stuff[nex.count],i/2);
+                nex.count +=1;
+                x.add(nex);
+            }
+
+            x.remove(0);
+
         }
         return sum;
-    }
-    public static void print(ArrayList<ArrayList<Integer>> x){
-        for(int i = 0; i<x.size();i++){
-            System.out.println(x.get(i));
-        }
 
-        //System.out.println();
-    }
-
-    public static class pedi {
-
-        int count;
-        int height;
-        int width;
-        ArrayList<ArrayList<Integer>> x = new ArrayList<ArrayList<Integer>>();
-
-        public pedi(ArrayList<ArrayList<Integer>> y){
-            x = y;
-        }
-
-        public pedi clone(){
-
-            pedi m = new pedi((ArrayList<ArrayList<Integer>>)x.clone());
-            m.count = count;
-            return m;
-
-        }
-
-    }
-
-    public static void expandpedigree(pedi x, int idx,int height) {
-        System.out.println(idx);
-        if (height == totheight-1) {
-            if (x.count == all) {
-                num++;
-            }
-            return;
-
-        }
-        //System.out.println(idx+ " " + height+ " " + x.get(height).size());
-
-        if (idx == x.x.get(height).size()) {
-            x.x.add(new ArrayList<Integer>());
-            expandpedigree(x, 0, height + 1);
-            return;
-        }
-        //print(x);
-
-
-        if (idx != x.x.get(height).size() || height == totheight) {
-            //System.out.println(idx+ " " + height+ " " + x.get(height).size());
-            int k = x.x.get(height).get(idx);
-
-            pedi m = x.clone();
-            pedi p =  m.clone();
-            m.x.get(height + 1).add(2 * k);
-            m.x.get(height + 1).add(2 * k + 1);
-
-            expandpedigree(m, idx + 1, height);
-            expandpedigree(p, idx + 1, height);
-
-        }
     }
 
     public static void main(String[] args) throws IOException {
@@ -96,20 +103,13 @@ public class nocows {
         StringTokenizer st = new StringTokenizer(f.readLine());
         int nodes = Integer.parseInt(st.nextToken());
         int height = Integer.parseInt(st.nextToken());
+        int k = expandpedigree(nodes,height);
 
-        totheight=height;
-        all = nodes;
-        ArrayList<ArrayList<Integer>> x = new ArrayList<ArrayList<Integer>>();
-        ArrayList<Integer> m = new ArrayList<Integer>();
-        m.add(0);
-        x.add(m);
-        x.add(new ArrayList<Integer>());
-        pedi p = new pedi(x);
-        p.count = 1;
-        expandpedigree(p, 0, 0);
+        System.out.println(choose(9,4));
 
-        out.println(num);
+        out.println(k);
         //System.out.println(num);
+
 
         
 
