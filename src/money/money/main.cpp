@@ -18,6 +18,8 @@
 
 using namespace std;
 
+
+
 long getnum(vector<int>  x, int k, int current){
     
     //cout<<current<<"\n";
@@ -72,22 +74,34 @@ int getit(vector<int> all, int tobuild, int k){
     
 }
 
-long trygetit(vector<int> all, int k, vector<int> & ref){
+
+long trytogetit(vector<int>& all, int k, vector<long> & ref){
+    if(ref[k]!=-1){
+        return ref[k];
+    }
     if(k<all[0]){
         return 0;
-    }else if(){
+    }else if(std::find(all.begin(),all.end()-1,k)!=all.end()){
         return 1;
     }
     int allo = 0;
-    for(int i = 1;i<all.size()/2;i++){
-        long first = trygetit(all , i, ref);
-        long second = trygetit(all, i, ref);
+    for(int i = 0;i<=all.size()/2;i++){
+        long first = trytogetit(all , i, ref);
+        long second;
+        if(i==all.size()/2){
+            second = trytogetit(all, all.size()-i, ref);
+        }
         if(first<all[i]){
             continue;
         }
-        allo+= first*second;
+        if(i!=all.size()/2){
+            allo+= first*second;
+        }else{
+            allo+= first*first;
+        }
     }
     //test[current]= all;
+    ref[k]+=allo;
     return allo;
     
     
@@ -103,7 +117,10 @@ int main(int argc, const char * argv[]) {
     //fout<< "yo";
     //fout.close();
     ifstream fin ("money.in");
+    fout<<"yo";
+    //fout.close();
     //cout<<"yo";
+    
     int k;
     int m;
     fin >> k >> m;
@@ -118,10 +135,16 @@ int main(int argc, const char * argv[]) {
     }
     vector<int> cool(k);
     
-    long s = trygetit(all,k , cool);
+    std::sort(all.begin(),all.end());
+    
+    
+    cout<< k<<"\n";
+    
+    long s = trytogetit(all,k , cool);
     cout<<s << "\n";
     fout << s << "\n";
     fout.close();
+    
      
     return 0;
 }
