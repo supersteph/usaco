@@ -21,17 +21,18 @@ class company {
     vector<int> owned;
     company (int k){
         num = k;
-        othercomps= *new vector<int>;
-        percent = *new vector<int>;
-        owned = *new vector<int>;
         touched = false;
         
     }
 };
 
+bool myfunc(company s, company k){
+    return s.num<k.num;
+}
+
 vector<int> get(company* x){
     if(x->othercomps.size()==0){
-        return *new vector<int>(0);
+        return vector<int>(0);
     }
     
     for(int i = 0; i<x->othercomps.size();i++){
@@ -221,12 +222,15 @@ int main(int argc, const char * argv[]) {
         }
         
     }
-    //cout<<"yo"<<"\n";
+    cout<<n.size();
     for(int i = 0; i< k;i++){
         tryto(n, i);
     }
     
+    sort(n.begin(),n.end(),myfunc);
+    
     for(int i = 0; i<k;i++){
+        sort(n[i].owned.begin(), n[i].owned.end());
         for(int j = 0;j<n[i].owned.size();j++){
             fout<<n[i].num<<" "<<n[i].owned[j]<< "\n";
             cout<<n[i].num<<" "<<n[i].owned[j] << "\n";
