@@ -30,49 +30,6 @@ bool myfunc(company s, company k){
     return s.num<k.num;
 }
 
-vector<int> get(company* x){
-    if(x->othercomps.size()==0){
-        return vector<int>(0);
-    }
-    
-    for(int i = 0; i<x->othercomps.size();i++){
-        if(x->percent[i]>50){
-            
-            
-        }
-        /*
-        //vector<int> stuff = get(x->othercomps[i]);
-        for(int i = 0; i<stuff.size();i++){
-            //x->owned.push_back(stuff[i]);
-        }
-         */
-        
-    }
-    
-    return x->owned;
-    
-}
-/*
-void tryget(company* x){
-    if(x->othercomps.size()==0){
-        return;
-    }
-    
-    for(int i = 0; i<x->othercomps.size();i++){
-        if(x->percent[i]>50){
-            x->owned.push_back(x->othercomps[i]->num);
-        }
-        tryget(x->othercomps[i]);
-        company m = *x->othercomps[i];
-        for(int j = 0; j<m.othercomps.size();j++){
-            
-        }
-        
-    }
-    
-}
-*/
-
 
 int getindex(company x, int k){
 
