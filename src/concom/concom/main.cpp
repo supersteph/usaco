@@ -73,14 +73,11 @@ void tryto(vector<company> & x , int k){
     
     for(int i = 0; i<x[k].othercomps.size();i++){
         
-        if(k==0&&x[k].othercomps[i]==45){
-            
-        }
-        
         if(x[k].percent[i]>100){
             cout<<"trouble yo";
         }
         if(x[k].percent[i]>50){
+            
             x[k].owned.push_back(x[k].othercomps[i]);
             //x[k].percent.erase(x[k].percent.begin()+i+1);
             //x[k].othercomps.erase(x[k].othercomps.begin()+i+1);
