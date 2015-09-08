@@ -13,7 +13,7 @@
 using namespace std;
 
 class company {
-    public:
+public:
     int num;
     bool touched;
     vector<int> othercomps;
@@ -22,39 +22,35 @@ class company {
     company (int k){
         num = k;
         touched = false;
-        
     }
+    company(const company& c)
+    : num(c.num), touched(c.touched),
+    othercomps(c.othercomps), percent(c.percent), owned(c.owned) {}
 };
 
-bool myfunc(company s, company k){
+bool myfunc(const company& s, const company& k){
     return s.num<k.num;
 }
 
-
-int getindex(company x, int k){
-
-    
+int getindex(const company& x, int k){
     for(int i = 0; i < x.percent.size();i++){
         if(x.othercomps[i]==k){
             return i;
         }
     }
     return -1;
-    
 }
 
-int getcomp(vector<company> n, int num){
-    
+int getcomp(const vector<company>& n, int num){
     for(int i = 0; i< n.size();i++){
         if(n[i].num==num){
             return i;
         }
     }
     return -1;
-    
 }
 
-bool inowned(company n, int s){
+bool inowned(const company& n, int s){
     for (int i = 0; i< n.owned.size(); i++) {
         if(n.owned[i]==s){
             return true;
@@ -65,7 +61,11 @@ bool inowned(company n, int s){
 
 
 void tryto(vector<company> & x , int k){
-
+    
+    if(k==0){
+        
+    
+    }
     if(x[k].touched==true){
         return;
     }
@@ -73,13 +73,17 @@ void tryto(vector<company> & x , int k){
     
     for(int i = 0; i<x[k].othercomps.size();i++){
         
-        
-        if(x[k].percent[i]>50){
+        if(k==0&&x[k].othercomps[i]==45){
             
-            if(inowned(x[k], x[k].othercomps[i])){
-                continue;
-            }
+        }
+        
+        if(x[k].percent[i]>100){
+            cout<<"trouble yo";
+        }
+        if(x[k].percent[i]>50){
             x[k].owned.push_back(x[k].othercomps[i]);
+            //x[k].percent.erase(x[k].percent.begin()+i+1);
+            //x[k].othercomps.erase(x[k].othercomps.begin()+i+1);
         } else{
             continue;
         }
@@ -87,60 +91,32 @@ void tryto(vector<company> & x , int k){
         
         int l = getcomp(x, x[k].othercomps[i]);
         if(l==-1){
+            //cout<<"trouble";
             continue;
         }
         tryto(x, l);
         
-        cout<< k <<" "<< i << "\n";
-        
-        /*
+        //cout<< k <<" "<< i << "\n";
         
         if(x[k].percent[i]>50){
-        
-            for(int j = 0; j< x[l].owned.size();j++){
             
-            //removeIndex(x[k], m.owned[j]);
-                //x[k].owned.push_back(x[l].owned[j]);
-            
-            
-            }
-        }
-        
-        */
-        
-        
-        if(x[k].percent[i]>50){
-        
             for(int j = 0; j< x[l].percent.size();j++){
                 int s = getindex(x[k], x[l].othercomps[j]);
                 if(s==-1){
                     x[k].othercomps.push_back(x[l].othercomps[j]);
                     x[k].percent.push_back(x[l].percent[j]);
                 }else {
-                    
-                    if(inowned(x[k], x[l].othercomps[j])){
-                        continue;
-                    }
-                
                     int sum = x[l].percent[j]+x[k].percent[s];
-                    x[k].percent[s] = sum;
-                
-                    if(sum>50){
+                    if(i>j&&sum>50){
                         x[k].owned.push_back(x[l].othercomps[j]);
+                    }else {
+                        x[k].percent[s] = sum;
                     }
-
+                    
                 }
-            
-            
             }
         }
-        
-        
-        
-        
     }
-    
-    
 }
 
 
@@ -161,7 +137,7 @@ int main(int argc, const char * argv[]) {
     int k;
     fin>>k;
     //cout<<k << "\n";
-    vector<company> n = *new vector<company>;
+    vector<company> n;
     for(int i = 0; i<k;i++){
         int first;
         int second;
@@ -170,7 +146,7 @@ int main(int argc, const char * argv[]) {
         int s = getcomp(n, first);
         if(s==-1){
             n.push_back(company(first));
-        
+            
             n[n.size()-1].othercomps.push_back(second);
             n[n.size()-1].percent.push_back(percent);
         }else{
@@ -180,13 +156,13 @@ int main(int argc, const char * argv[]) {
         
     }
     cout<<n.size();
-    for(int i = 0; i< k;i++){
+    for(int i = 0; i< n.size();i++){
         tryto(n, i);
     }
     
     sort(n.begin(),n.end(),myfunc);
     
-    for(int i = 0; i<k;i++){
+    for(int i = 0; i<n.size();i++){
         sort(n[i].owned.begin(), n[i].owned.end());
         for(int j = 0;j<n[i].owned.size();j++){
             fout<<n[i].num<<" "<<n[i].owned[j]<< "\n";
@@ -194,14 +170,6 @@ int main(int argc, const char * argv[]) {
         }
     }
     
-    
-
     fout.close();
-     
-    
-    
-    
-    
     return 0;
 }
-
