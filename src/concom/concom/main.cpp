@@ -73,12 +73,12 @@ void tryto(vector<company> & x , int k){
     
     for(int i = 0; i<x[k].othercomps.size();i++){
         
-        if(x[k].percent[i]>100){
-            cout<<"trouble yo";
-        }
+        
+        
         if(x[k].percent[i]>50){
-            
-            x[k].owned.push_back(x[k].othercomps[i]);
+            if(!inowned(x[k], x[k].othercomps[i])){
+                x[k].owned.push_back(x[k].othercomps[i]);
+            }
             //x[k].percent.erase(x[k].percent.begin()+i+1);
             //x[k].othercomps.erase(x[k].othercomps.begin()+i+1);
         } else{
@@ -104,7 +104,7 @@ void tryto(vector<company> & x , int k){
                     x[k].percent.push_back(x[l].percent[j]);
                 }else {
                     int sum = x[l].percent[j]+x[k].percent[s];
-                    if(i>j&&sum>50){
+                    if(i>=s&&sum>50&&!inowned(x[k], x[l].othercomps[j])){
                         x[k].owned.push_back(x[l].othercomps[j]);
                     }else {
                         x[k].percent[s] = sum;
