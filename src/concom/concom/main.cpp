@@ -14,6 +14,7 @@ using namespace std;
 
 
 int searchto(vector<int> nums, int k){
+    //find the integer k in the vector k
     for(int i = 0; i<nums.size();i++){
         if(nums[i]==k){
             return i;
@@ -23,6 +24,7 @@ int searchto(vector<int> nums, int k){
 }
 
 void addstuff(vector<vector<int> >&  kindofowned, int index, int i){
+    // go through everthing in the ith row of kindofowned and add it to the index row of kindofowned
     for(int j = 0; j<kindofowned.size();j++){
         kindofowned[index][j] += kindofowned[i][j];
         
@@ -30,6 +32,7 @@ void addstuff(vector<vector<int> >&  kindofowned, int index, int i){
 }
 
 void doarow(vector<bool>& beento, vector<vector<int> >& kindofowned, int index){
+    //figure out what each row owns
     if(beento[index]==true){
         return;
     }
@@ -61,6 +64,7 @@ void doarow(vector<bool>& beento, vector<vector<int> >& kindofowned, int index){
 
 
 void trytotwo(vector<vector<int> >& part){
+    //fill out everything in the table
     vector<bool> beento = *new vector<bool>;
     beento.resize(part.size());
     //this is to tell if you have been through everything or not
@@ -75,6 +79,7 @@ void trytotwo(vector<vector<int> >& part){
 
 
 vector<int> getindexes(vector<int> & sorted, vector<int> & unsorted){
+    //find where the unsorted elemests are in the sorted elements
     vector<int> x;
     for(int i = 0;i<unsorted.size();i++){
         for(int j = 0;j<sorted.size();j++){
