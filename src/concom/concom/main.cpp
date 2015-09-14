@@ -22,7 +22,7 @@ int searchto(vector<int> nums, int k){
     return -1;
 }
 
-void addstuff(vector<vector<int> > kindofowned, int index, int i){
+void addstuff(vector<vector<int> >&  kindofowned, int index, int i){
     for(int j = 0; j<kindofowned.size();j++){
         kindofowned[index][j] += kindofowned[i][j];
         
@@ -33,16 +33,14 @@ void doarow(vector<bool>& beento, vector<vector<int> >& kindofowned, int index){
     if(beento[index]==true){
         return;
     }
+    //if you've been here you stop
     
     beento[index]=true;
-    
-    if(index==3)
-    {
-        
-    }
+    //make a note that you've been here
     for(int i = 0; i<kindofowned.size();i++){
         
         doarow(beento, kindofowned, i);
+        // do that row in case you need to use it
         
         if(kindofowned[index][i]>50){
             for(int j = 0; j<kindofowned.size();j++){
@@ -65,7 +63,9 @@ void doarow(vector<bool>& beento, vector<vector<int> >& kindofowned, int index){
 void trytotwo(vector<vector<int> >& part){
     vector<bool> beento = *new vector<bool>;
     beento.resize(part.size());
+    //this is to tell if you have been through everything or not
     for(int i = 0;i<part.size();i++){
+        // go through all the rows and call the function doarow
         doarow(beento, part, i);
     }
 
@@ -74,7 +74,7 @@ void trytotwo(vector<vector<int> >& part){
 }
 
 
-vector<int> getindexes(vector<int> sorted, vector<int> unsorted){
+vector<int> getindexes(vector<int> & sorted, vector<int> & unsorted){
     vector<int> x;
     for(int i = 0;i<unsorted.size();i++){
         for(int j = 0;j<sorted.size();j++){
@@ -108,9 +108,12 @@ int main(int argc, const char * argv[]) {
     fin>>k;
     //cout<<k << "\n";
     vector<vector<int> > n;
-    vector<bool> doesown;
+    // n[i][j] how much the company m[i] owns the company m[j]
+    //vector<bool> doesown;
+    //if a certain company has been touched yet
     vector<int> m;
-    int l = 0;
+    // the order of the companies
+    //int l = 0;
     
     for(int i = 0; i<k;i++){
         int first;
@@ -119,29 +122,32 @@ int main(int argc, const char * argv[]) {
         fin>>first>>second>>percent;
         int k = searchto(m, first);
         int s = searchto(m,second);
-        if(k==-1){
-            doesown.push_back(first);
-            l++;
-        }
-        if(s==-1){
-            doesown.push_back(second);
-            l++;
-        }
+        
+        //find out if the companies have already been seen before if it has then you find the index
+        
+
+
         
         if(k==-1&&s==-1){
             for(int i = 0; i<n.size();i++){
                 n[i].push_back(0);
                 n[i].push_back(0);
-                
+                //means that both elements have not been declared before
+                //so you add an extra two elements to each row
             }
             
             m.push_back(first);
             m.push_back(second);
+            //add two elements in m
             vector <int> x;
             x.resize(m.size());
+            
             n.push_back(x);
             n.push_back(x);
+            
+            // add two rows at the bottom of the 2d vector
         }else if(k==-1||s==-1){
+            //same thing as above except adding only one thing to each
             for(int i = 0; i<n.size();i++){
                 n[i].push_back(0);
             
@@ -165,6 +171,7 @@ int main(int argc, const char * argv[]) {
         s = searchto(m,second);
         
         n[k][s]=percent;
+        //add the percent to the twod vector
         
         
         
@@ -174,8 +181,9 @@ int main(int argc, const char * argv[]) {
     
     vector<int> notsort = m;
     sort(m.begin(), m.end());
+    // have m be a sorted version and notsort be an unsorted version
     vector<int> indexes = getindexes(notsort, m);
-    
+    // have the indexes of how in nosort where it corresponds in m
     for(int i = 0; i<n.size();i++){
         
         for(int j = 0;j<n.size();j++){
@@ -183,6 +191,7 @@ int main(int argc, const char * argv[]) {
             if(n[indexes[i]][indexes[j]]>50){
                 fout<<notsort[indexes[i]]<<" "<<notsort[indexes[j]]<<"\n";
                 cout<<notsort[indexes[i]]<<" "<<notsort[indexes[j]]<<"\n";
+                // go through everything and print them out in the sorted way
             }
             
         }
