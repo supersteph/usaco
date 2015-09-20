@@ -17,10 +17,11 @@ void dostuff(vector<vector<int> >& s, vector<vector<vector<int> > >& add, int p)
         for(int b = 0; b<p;b++){
             for(int c = 0; c<p;c++){
                 if(s[b][c]>50) continue;
-                for(int d = 0; d<p;d++){
+                for(int d = 0; d<p;d++){        
                     if(s[b][d]>=50&&add[b][c][d]==0){
                         add[b][c][d]=1;
                         s[b][c]+=s[d][c];
+                        if (s[b][c]>100)s[b][c] = 100;
                     }
                     
                 }
@@ -87,6 +88,7 @@ int main(int argc, const char * argv[]) {
         for(int j = 0; j<q;j++){
             //cout<<n[i][j];
             if(n[i][j]>=50&&i!=j){
+                if(n[i][j]!=100 || k==1) n[i][j] = n[j][i] = 0;
                 fout<<i+1<<" "<<j+1<<"\n";
             }
         }
