@@ -71,6 +71,7 @@ vector<place> step(vector<place>& stuff, vector<vector<bool> >& map){
             place k;
             k.first=n.first;
             k.second = n.second+2;
+            map[k.first][k.second] = false;
             other.push_back(k);
             
         }
@@ -78,12 +79,14 @@ vector<place> step(vector<place>& stuff, vector<vector<bool> >& map){
             place k;
             k.first = n.first;
             k.second= n.second-2;
+            map[k.first][k.second] = false;
             other.push_back(k);
         }
         if(n.first!=map.size()-2 && map[n.first+1][n.second] && map[n.first+2][n.second]){
             place k;
             k.first = n.first+2;
             k.second= n.second;
+            map[k.first][k.second] = false;
             other.push_back(k);
             
         
@@ -92,9 +95,10 @@ vector<place> step(vector<place>& stuff, vector<vector<bool> >& map){
             place k;
             k.first = n.first-2;
             k.second= n.second;
+            map[k.first][k.second] = false;
             other.push_back(k);
         }
-    
+        map[n.first][n.second]=false;
         
         
     }
