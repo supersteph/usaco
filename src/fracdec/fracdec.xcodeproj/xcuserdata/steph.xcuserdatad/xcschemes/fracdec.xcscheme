@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "97C1BA921BB37B3800259891"
-               BuildableName = "cowtour"
-               BlueprintName = "cowtour"
-               ReferencedContainer = "container:cowtour.xcodeproj">
+               BlueprintIdentifier = "97C1BAA51BB3B8F400259891"
+               BuildableName = "fracdec"
+               BlueprintName = "fracdec"
+               ReferencedContainer = "container:fracdec.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "97C1BA921BB37B3800259891"
-            BuildableName = "cowtour"
-            BlueprintName = "cowtour"
-            ReferencedContainer = "container:cowtour.xcodeproj">
+            BlueprintIdentifier = "97C1BAA51BB3B8F400259891"
+            BuildableName = "fracdec"
+            BlueprintName = "fracdec"
+            ReferencedContainer = "container:fracdec.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -52,10 +52,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "97C1BA921BB37B3800259891"
-            BuildableName = "cowtour"
-            BlueprintName = "cowtour"
-            ReferencedContainer = "container:cowtour.xcodeproj">
+            BlueprintIdentifier = "97C1BAA51BB3B8F400259891"
+            BuildableName = "fracdec"
+            BlueprintName = "fracdec"
+            ReferencedContainer = "container:fracdec.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -71,10 +71,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "97C1BA921BB37B3800259891"
-            BuildableName = "cowtour"
-            BlueprintName = "cowtour"
-            ReferencedContainer = "container:cowtour.xcodeproj">
+            BlueprintIdentifier = "97C1BAA51BB3B8F400259891"
+            BuildableName = "fracdec"
+            BlueprintName = "fracdec"
+            ReferencedContainer = "container:fracdec.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
