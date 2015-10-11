@@ -17,9 +17,18 @@ class object {
 public:
     int first;
     int second;
-    vector<int> indexes;
+    object(){
+        first = 0;
+        second = 0;
+    }
 };
 
+object newobj(int first, int second){
+    object n;
+    n.first = first;
+    n.second = second;
+    return n;
+}
 
 int connect(vector<object> x){
     return 0;
@@ -34,10 +43,11 @@ int main(int argc, const char * argv[]) {
     //fout.cose();
     
     ifstream fin ("ttwo.in");
-    vector<object> pastures;
-    
     int k;
     fin>>k;
+    vector<object> coord (k,*new object());
+    vector<vector<int>> stuff;
+    
     
     for(int i = 0; i<k;i++){
         int x, y;
@@ -45,7 +55,7 @@ int main(int argc, const char * argv[]) {
         fin>>x>>y;
         k.first = x;
         k.second = y;
-        pastures.push_back(k);
+        coord.push_back(k);
     }
     
     
