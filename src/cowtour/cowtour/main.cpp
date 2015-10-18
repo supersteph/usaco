@@ -42,7 +42,7 @@ int connect(vector<object> x){
 }
 
 double getdis(object n, object k){
-    return sqrt((n.first-k.first)*(n.first-k.first)+(n.second-k.second)*(n.second-k.second));
+     return sqrt((n.first-k.first)*(n.first-k.first)+(n.second-k.second)*(n.second-k.second));
 }
 
 void map(vector<vector<double> >& x){
@@ -50,7 +50,7 @@ void map(vector<vector<double> >& x){
     
     for(int k = 0; k<x.size();k++){
         
-        for(int i = 0; i<x[k].size();i++){
+        for(int i = k; i<x[k].size();i++){
             //good(k);
             //good(i);
             
@@ -146,6 +146,18 @@ int main(int argc, const char * argv[]) {
         all.push_back(max);
     }
     
+    vector<double>diameter(k,-1);
+    for(int i = 0; i<all.size();i++){
+        double max = 0;
+        for(int j = 0; j<all.size();j++){
+            if(stuff[i][j]!=0){
+                if(all[j]>max){
+                    max = all[j];
+                }
+            }
+        }
+        diameter[i] = max;
+    }
     double min = -1.0;
     for(int i = 0; i<stuff.size();i++){
         for(int j = i; j<stuff.size();j++){
@@ -153,10 +165,11 @@ int main(int argc, const char * argv[]) {
                 double maxi = all[i];
                 double maxj = all[j];
                 if(min == -1.0){
-                    min = maxj+maxi+getdis(coord[i], coord[j]);
+                    min = max(maxj+maxi+getdis(coord[i], coord[j]), max(diameter[i],diameter[j]));
+                    
                 }else if( min > maxj+maxi+getdis(coord[i], coord[j])){
                     
-                    min =maxj+maxi+getdis(coord[i], coord[j]);
+                    min = max(maxj+maxi+getdis(coord[i], coord[j]), max(diameter[i],diameter[j]));
                 }
             }
         }
