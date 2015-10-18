@@ -14,8 +14,14 @@
 #include <iomanip>
 using namespace std;
 /*
- I think the strategy is that I am going to run through this process 52 times because at most it takes 52 iterations for me to run through everything so for each one of the iterations it goes through every element in the 2d array, so then let's say I'm at an element [x][y] that means that distance x is something away from y, so then I got to the [y] column of the 2d array then I go through the entire column and then I i make the column k[x] equal to k[i] that is my algorithim for figuring out the shortest path to it.
- After I figure out the shortest path to everything I got through each element that is not connected by something, and then I add up the longest shortest path that the two have, and then I add it up with the distance between the two and i check to see if it's less than my min if it is then I'm good if it isn't then i keep on going
+ I think the strategy is that I am going to run through this process 52 times because at most it takes 52 iterations for me
+ to run through everything so for each one of the iterations it goes through every element in the 2d array, so then let's say 
+ I'm at an element [x][y] that means that distance x is something away from y, so then I got to the [y] column of the 2d 
+ array then I go through the entire column and then I i make the column k[x] equal to k[i] that is my algorithim for figuring 
+ out the shortest path to it.
+ After I figure out the shortest path to everything I got through each element that is not connected by something, and then I 
+ add up the longest shortest path that the two have, and then I add it up with the distance between the two and i check to 
+ see if it's less than my min if it is then I'm good if it isn't then i keep on going
  
  
  
