@@ -14,15 +14,19 @@
 #include <iomanip>
 using namespace std;
 /*
- I think the strategy is that I am going to run through this process 52 times because at most it takes 52 iterations for me
+ The strategy is that I am first going to do Bellman-Ford, I am going to take the size of the array which means going to run through this n times. Because at most a certain point would be n points away from the current point you are at
  to run through everything so for each one of the iterations it goes through every element in the 2d array, so then let's say 
- I'm at an element [x][y] that means that distance x is something away from y, so then I got to the [y] column of the 2d 
- array then I go through the entire column and then I i make the column k[x] equal to k[i] that is my algorithim for figuring 
- out the shortest path to it.
- After I figure out the shortest path to everything I got through each element that is not connected by something, and then I 
- add up the longest shortest path that the two have, and then I add it up with the distance between the two and i check to 
- see if it's less than my min if it is then I'm good if it isn't then i keep on going
+ I'm at an element [x][y] that means that point x [x][j] distance away from y, so then I got to the [y] column of the 2d
+ array then I go through the entire column and then I i make the column [x] equal to [i] that is my algorithim for figuring
+ out the shortest path to it. I do this to find the shortest one, like from point i to point k may be slower than from point 
+ i to point j to point k, it also allows me to figure out all the places that I haven't been to from that point.
  
+ After I figure out the shortest path to everything I got through each element of the 2d array that is infinity, I want to 
+ find the points that can't be connected and then I find the longest distance that I can go from each point, So i find the 
+ farthest distance from point I and then I find the farthest distance from point j, this means that if I connect these two 
+ points, the farthest will be the edges and the diameter would be the two farthest points plus the distance between I and J. 
+ I then compare it with the maximum diamter of the field I vs the diiamter of field J and I find the max between the max
+ diamter and the connected points
  
  
  */
