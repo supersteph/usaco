@@ -1,7 +1,4 @@
 
-import sun.awt.image.ImageWatched;
-
-import javax.print.DocFlavor;
 import java.io.*;
 
 import java.util.ArrayList;
@@ -25,17 +22,18 @@ public class moocast {
         }
         return false;
     }
-    public static int flow(LinkedList<node> unvisted, node cur){
+    public static int flow(ArrayList<node> unvisted, node cur){
         int count = 1;
         if(unvisted.size()==0){
-            return count;
+            return 2;
         }
-        for(node s:unvisted){
-            System.out.println(unvisted);
+        for(int i = 0; i<unvisted.size();i++){
+            node s = unvisted.get(i);
             if(canreach(cur,s)){
-                unvisted.remove(s);
+                unvisted.remove(i);
+                i--;
                 count+=flow(unvisted,s);
-                System.out.println(count);
+                //unvisted.add(s);
             }
         }
         return count;
@@ -50,18 +48,31 @@ public class moocast {
         PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("moocast.out")));
 
         int num = Integer.parseInt(f.readLine());
-        LinkedList<node> pls = new LinkedList<node>();
+        ArrayList<node> ad = new ArrayList<node>();
         for(int i = 0; i<num;i++){
             node m = new node();
             StringTokenizer st = new StringTokenizer(f.readLine());
             m.x= Integer.parseInt(st.nextToken());
             m.y = Integer.parseInt(st.nextToken());
             m.pow = Integer.parseInt(st.nextToken());
-            pls.add(m);
+            ad.add(m);
         }
-        node source = pls.pop();
-        int n = flow(pls,source);
-        out.println(n);
+        int max = 0;
+
+        for(int i = 0; i<ad.size();i++){
+            ArrayList<node> pls = (ArrayList<node>) ad.clone();
+            node source = pls.get(i);
+            pls.remove(i);
+            int n = flow(pls,source);
+            if(i>pls.size()) {
+                pls.add(source);
+            }else {
+                pls.add(i, source);
+            }
+            max = Math.max(n,max);
+        }
+
+        out.println(max);
         out.close();
 
 
