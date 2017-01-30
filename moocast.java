@@ -49,30 +49,8 @@ public class moocast {
 
         int num = Integer.parseInt(f.readLine());
         ArrayList<node> ad = new ArrayList<node>();
-        for(int i = 0; i<num;i++){
-            node m = new node();
-            StringTokenizer st = new StringTokenizer(f.readLine());
-            m.x= Integer.parseInt(st.nextToken());
-            m.y = Integer.parseInt(st.nextToken());
-            m.pow = Integer.parseInt(st.nextToken());
-            ad.add(m);
-        }
-        int max = 0;
 
-        for(int i = 0; i<ad.size();i++){
-            ArrayList<node> pls = (ArrayList<node>) ad.clone();
-            node source = pls.get(i);
-            pls.remove(i);
-            int n = flow(pls,source);
-            if(i>pls.size()) {
-                pls.add(source);
-            }else {
-                pls.add(i, source);
-            }
-            max = Math.max(n,max);
-        }
 
-        out.println(max);
         out.close();
 
 
