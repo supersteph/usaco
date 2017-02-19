@@ -22,7 +22,7 @@ public class lasers {
         int endy = Integer.parseInt(st.nextToken());
 
         HashSet<Integer> seeny = new HashSet<Integer>();
-        
+
 
 
         out.close();
