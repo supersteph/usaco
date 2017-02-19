@@ -4,6 +4,7 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 public class visitfj {
+    static int ops = 0;
     static int dr[] = {0, 1, 2, 3, 2, 1, 0, -1, -2, -3, -2, -1, -1, 1, 0, 0};
 
     static int dc[] = {3, 2, 1, 0, -1, -2, -3, -2, -1, 0, 1, 2, 0, 0, -1, 1};
@@ -16,7 +17,7 @@ public class visitfj {
             cost[x][y] = cur+key[x][y];
             return true;
         }
-        else if(cost[x][y]>=cur){
+        else if(cost[x][y]>cur){
             cost[x][y] = cur+key[x][y];
             return true;
         }
@@ -26,7 +27,7 @@ public class visitfj {
 
     static void dp(int[][] key, int[][] cost, int n,int t, int x, int y){
 
-
+        ops++;
         if(n-x-1+n-1-y<3){
             //System.out.println("yo");
             cost[n-1][n-1] = Math.min(cost[n-1][n-1],cost[x][y]+t*(n-x-1+n-y-1));
@@ -65,12 +66,15 @@ public class visitfj {
         if (d != dp[r][c]) {
             return;
         }
+        ops++;
         int n = a.length;
         int dist = Math.abs(n - 1 - r) + Math.abs(n - 1 - c);
 
             //System.out.println("yo");
-        dp[n-1][n-1] = Math.min(dp[n-1][n-1], d + dist * t);
+        if(dist<=2) {
+            dp[n - 1][n - 1] = Math.min(dp[n - 1][n - 1], d + dist * t);
 
+        }
 
         for (int i = 0; i < dr.length; i++) {
             int nr = r + dr[i];
@@ -103,13 +107,15 @@ public class visitfj {
             st = new StringTokenizer(f.readLine());
             for(int j = 0; j<n;j++){
                 costs[i][j] = Integer.parseInt(st.nextToken());
-                keys[i][j] = Integer.MAX_VALUE;
+                keys[i][j] = -1;
             }
         }
         keys[0][0] = 0;
-        dp2(keys,costs,0,0,0,t);
+        //dp2(keys,costs,0,0,0,t);
+        dp(costs,keys,n,t,0,0);
         out.println(keys[n-1][n-1]);
-        System.out.print(keys[n-1][n-1]);
+        System.out.println(ops);
+        System.out.println(keys[n-1][n-1]);
 
         out.close();
     }

@@ -36,6 +36,9 @@ public class visitfj1 {
         for(int i = 0; i<dp.length;i++){
             Arrays.fill(dp[i],Integer.MAX_VALUE);
         }
+
+        int cur = 0;
+
         dp[0][0] = 0;
         LinkedList<pair> places = new LinkedList<pair>();
         pair m = new pair(0,0);
@@ -50,6 +53,8 @@ public class visitfj1 {
             if (d > dp[r][c]) {
                 continue;
             }
+
+            cur++;
 
             int dist = Math.abs(n - 1 - r) + Math.abs(n - 1 - c);
             if (dist <= 2) {
@@ -69,6 +74,7 @@ public class visitfj1 {
             }
         }
 
+        System.out.println(cur);
         out.println(result);
         System.out.println(result);
 
