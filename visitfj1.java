@@ -1,19 +1,14 @@
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.PriorityQueue;
-import java.util.StringTokenizer;
+import java.util.*;
 
-/**
- * Created by steve on 2/17/17.
- */
+
 public class visitfj1 {
     static int dr[] = {0, 1, 2, 3, 2, 1, 0, -1, -2, -3, -2, -1, -1, 1, 0, 0};
 
     static int dc[] = {3, 2, 1, 0, -1, -2, -3, -2, -1, 0, 1, 2, 0, 0, -1, 1};
 
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException {
 
         BufferedReader f = new BufferedReader(new FileReader("visitfj.in"));
         // input file name goes above
@@ -43,7 +38,7 @@ public class visitfj1 {
         LinkedList<pair> places = new LinkedList<pair>();
         pair m = new pair(0,0);
         places.add(m);
-        int result = 0x7FFFFFFF;
+        int result = Integer.MAX_VALUE;
         while (places.size()!=0) {
             pair ms = places.poll();
             int d = -ms.x;
