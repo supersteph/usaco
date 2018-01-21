@@ -4,8 +4,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.StringTokenizer;
-
-
 public class cbarn2 {
     public static void main(String[] args) throws IOException {
         // write your code here
@@ -50,19 +48,12 @@ public class cbarn2 {
         }
 
         System.out.println(num);
-
         int[] dup = new int[n];
         for(int i = 0; i<s.length;i++){
             dup[(i+n-num-1)%n]=s[i];
         }
 
-        for(int i: dup){
-            System.out.print(i+" ");
-        }
-        System.out.println();
-
-
-        int count = 0;
+        long count = 0;
         for(int j = n-1;j>0;j--){
 
             if(dup[j]==0){
@@ -75,7 +66,7 @@ public class cbarn2 {
                 //end is j
                 //System.out.println(cur);
                 for(int i = 1; i<=counts;i++){
-                    count+=(i+j-counts-cur)*(i+j-counts-cur);
+                    count+=(long)(i+j-counts-cur)*(i+j-counts-cur);
                     dup[i+j-counts] = 1;
                 }
                 if(counts<=j-cur) {
